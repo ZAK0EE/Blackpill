@@ -81,18 +81,18 @@ typedef enum
  */
 typedef enum
 {
-    RCC_APB1PERIPHERAL_TIM2     = ((uint32_t)1 <<  0),	/**< TIM2 - 14-bit timer */ 
-    RCC_APB1PERIPHERAL_TIM3     = ((uint32_t)1 <<  1),	/**< TIM3 - 16-bit timer */
-    RCC_APB1PERIPHERAL_TIM4     = ((uint32_t)1 <<  2),	/**< TIM4 - 16-bit timer */
-    RCC_APB1PERIPHERAL_TIM5     = ((uint32_t)1 <<  3),	/**< TIM5 - 32-bit timer */
-    RCC_APB1PERIPHERAL_WWDG     = ((uint32_t)1 <<  11),	/**< Window Watchdog */
-    RCC_APB1PERIPHERAL_SPI2     = ((uint32_t)1 <<  14),	/**< SPI2 */
-    RCC_APB1PERIPHERAL_SPI3     = ((uint32_t)1 <<  15),	/**< SPI3 */
-    RCC_APB1PERIPHERAL_USART2   = ((uint32_t)1 <<  17),	/**< USART2 */
-    RCC_APB1PERIPHERAL_I2C1     = ((uint32_t)1 <<  21),	/**< I2C1 - Inter-Integrated Circuit */
-    RCC_APB1PERIPHERAL_I2C2     = ((uint32_t)1 <<  22),	/**< I2C2 - Inter-Integrated Circuit */
-    RCC_APB1PERIPHERAL_I2C3     = ((uint32_t)1 <<  23),	/**< I2C3 - Inter-Integrated Circuit */
-    RCC_APB1PERIPHERAL_PWR      = ((uint32_t)1 <<  28),	/**< Power interface */
+    RCC_APB1PERIPHERAL_TIM2     = (1UL <<  0),	/**< TIM2 - 14-bit timer */ 
+    RCC_APB1PERIPHERAL_TIM3     = (1UL <<  1),	/**< TIM3 - 16-bit timer */
+    RCC_APB1PERIPHERAL_TIM4     = (1UL <<  2),	/**< TIM4 - 16-bit timer */
+    RCC_APB1PERIPHERAL_TIM5     = (1UL <<  3),	/**< TIM5 - 32-bit timer */
+    RCC_APB1PERIPHERAL_WWDG     = (1UL <<  11),	/**< Window Watchdog */
+    RCC_APB1PERIPHERAL_SPI2     = (1UL <<  14),	/**< SPI2 */
+    RCC_APB1PERIPHERAL_SPI3     = (1UL <<  15),	/**< SPI3 */
+    RCC_APB1PERIPHERAL_USART2   = (1UL <<  17),	/**< USART2 */
+    RCC_APB1PERIPHERAL_I2C1     = (1UL <<  21),	/**< I2C1 - Inter-Integrated Circuit */
+    RCC_APB1PERIPHERAL_I2C2     = (1UL <<  22),	/**< I2C2 - Inter-Integrated Circuit */
+    RCC_APB1PERIPHERAL_I2C3     = (1UL <<  23),	/**< I2C3 - Inter-Integrated Circuit */
+    RCC_APB1PERIPHERAL_PWR      = (1UL <<  28),	/**< Power interface */
 }
 RCC_APB1PeripeheralTypeDef;
 
@@ -102,17 +102,17 @@ RCC_APB1PeripeheralTypeDef;
  */
 typedef enum
 {
-    RCC_APB2PERIPHERAL_TIM1     = ((uint32_t)1 <<  0),   /**< TIM1 peripheral  */
-    RCC_APB2PERIPHERAL_USART1   = ((uint32_t)1 <<  4),   /**< USART1 peripheral */
-    RCC_APB2PERIPHERAL_USART6   = ((uint32_t)1 <<  5),   /**< USART6 peripheral */
-    RCC_APB2PERIPHERAL_ADC1     = ((uint32_t)1 <<  8),   /**< ADC1 peripheral */
-    RCC_APB2PERIPHERAL_SDI0     = ((uint32_t)1 << 11),   /**< SDIO peripheral */
-    RCC_APB2PERIPHERAL_SPI1     = ((uint32_t)1 << 12),   /**< SPI1 peripheral */
-    RCC_APB2PERIPHERAL_SPI4     = ((uint32_t)1 << 13),   /**< SPI4 peripheral */
-    RCC_APB2PERIPHERAL_SYSCFG   = ((uint32_t)1 << 14),   /**< System Configuration */
-    RCC_APB2PERIPHERAL_TMI9     = ((uint32_t)1 << 16),   /**< TIM9 peripheral */
-    RCC_APB2PERIPHERAL_TIM10    = ((uint32_t)1 << 17),   /**< TIM10 peripheral */
-    RCC_APB2PERIPHERAL_TIM11    = ((uint32_t)1 << 18),   /**< TIM11 peripheral */
+    RCC_APB2PERIPHERAL_TIM1     = (1UL <<  0),   /**< TIM1 peripheral  */
+    RCC_APB2PERIPHERAL_USART1   = (1UL <<  4),   /**< USART1 peripheral */
+    RCC_APB2PERIPHERAL_USART6   = (1UL <<  5),   /**< USART6 peripheral */
+    RCC_APB2PERIPHERAL_ADC1     = (1UL <<  8),   /**< ADC1 peripheral */
+    RCC_APB2PERIPHERAL_SDI0     = (1UL << 11),   /**< SDIO peripheral */
+    RCC_APB2PERIPHERAL_SPI1     = (1UL << 12),   /**< SPI1 peripheral */
+    RCC_APB2PERIPHERAL_SPI4     = (1UL << 13),   /**< SPI4 peripheral */
+    RCC_APB2PERIPHERAL_SYSCFG   = (1UL << 14),   /**< System Configuration */
+    RCC_APB2PERIPHERAL_TMI9     = (1UL << 16),   /**< TIM9 peripheral */
+    RCC_APB2PERIPHERAL_TIM10    = (1UL << 17),   /**< TIM10 peripheral */
+    RCC_APB2PERIPHERAL_TIM11    = (1UL << 18),   /**< TIM11 peripheral */
 } RCC_APB2PeripeheralTypeDef;
 
 /**
