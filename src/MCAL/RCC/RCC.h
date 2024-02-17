@@ -138,9 +138,49 @@ typedef struct
 
 } RCC_PLLConfigTypeDef;
 
+/**
+ * @brief Enumeration defining AHB1 prescaler values for the RCC (Reset and Clock Control) module.
+ */
+typedef enum 
+{
+    RCC_AHB1PRESCALER_0   = 0x0,  /**< System clock not divided. */
+    RCC_AHB1PRESCALER_2   = 0x8,  /**< System clock divided by 2. */
+    RCC_AHB1PRESCALER_4   = 0x9,  /**< System clock divided by 4. */
+    RCC_AHB1PRESCALER_8   = 0xA,  /**< System clock divided by 8. */
+    RCC_AHB1PRESCALER_16  = 0xB,  /**< System clock divided by 16. */
+    RCC_AHB1PRESCALER_64  = 0xC,  /**< System clock divided by 64. */
+    RCC_AHB1PRESCALER_128 = 0xD,  /**< System clock divided by 128. */
+    RCC_AHB1PRESCALER_256 = 0xE,  /**< System clock divided by 256. */
+    RCC_AHB1PRESCALER_512 = 0xF   /**< System clock divided by 512. */
+
+} RCC_AHB1PrescalerTypeDef;
 
 
+/**
+ * @brief Enumeration defining APB1 prescaler values for the RCC (Reset and Clock Control) module.
+ */
+typedef enum 
+{
+    RCC_APB1PRESCALER_0   = 0x0,  /**< AHB clock not divided. */
+    RCC_APB1PRESCALER_2   = 0x4,  /**< AHB clock divided by 2. */
+    RCC_APB1PRESCALER_4   = 0x5,  /**< AHB clock divided by 4. */
+    RCC_APB1PRESCALER_8   = 0x6,  /**< AHB clock divided by 8. */
+    RCC_APB1PRESCALER_16  = 0x7   /**< AHB clock divided by 16. */
 
+} RCC_APB1PrescalerTypeDef;
+
+/**
+ * @brief Enumeration defining APB2 prescaler values for the RCC (Reset and Clock Control) module.
+ */
+typedef enum 
+{
+    RCC_APB2PRESCALER_0   = 0x0,  /**< AHB clock not divided. */
+    RCC_APB2PRESCALER_2   = 0x4,  /**< AHB clock divided by 2. */
+    RCC_APB2PRESCALER_4   = 0x5,  /**< AHB clock divided by 4. */
+    RCC_APB2PRESCALER_8   = 0x6,  /**< AHB clock divided by 8. */
+    RCC_APB2PRESCALER_16  = 0x7   /**< AHB clock divided by 16. */
+
+} RCC_APB2PrescalerTypeDef;
 
 /********************************************************************************************************/
 /************************************************APIs****************************************************/
@@ -182,7 +222,7 @@ MCAL_StatusTypeDef RCC_selectSystemClock(RCC_SystemClockTypeDef SystemClock);
 MCAL_StatusTypeDef RCC_getSystemClock(RCC_SystemClockTypeDef *SystemClock);
 
 
-MCAL_StatusTypeDef RCC_selectSystemClockPrescalers(AHB1Prescaler, APB1Prescaler, APB2Prescaler);
+MCAL_StatusTypeDef RCC_selectSystemClockPrescalers(RCC_AHB1PrescalerTypeDef AHB1Prescaler, RCC_APB1PrescalerTypeDef APB1Prescaler, RCC_APB2PrescalerTypeDef APB2Prescaler);
 
 /**
  * @brief Configures the PLL clock.
