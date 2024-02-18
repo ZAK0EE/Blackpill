@@ -119,10 +119,8 @@ MCAL_StatusTypeDef RCC_enableClock(RCC_SystemClockTypeDef Clock)
 
 MCAL_StatusTypeDef RCC_disableClock(RCC_SystemClockTypeDef Clock)
 {
-    
     RCC->CR &= ~Clock;
     return MCAL_OK;
-
 }
 
 
@@ -138,7 +136,6 @@ MCAL_StatusTypeDef RCC_selectSystemClock(RCC_SystemClockTypeDef SystemClock)
 
 MCAL_StatusTypeDef RCC_getSystemClock(RCC_SystemClockTypeDef *SystemClock)
 {
-
     *SystemClock = (((RCC->CFGR) & RCC_CFGR_SWS_MASK) >> 2);
 
     return MCAL_OK;
@@ -223,7 +220,7 @@ MCAL_StatusTypeDef RCC_selectSystemClockPrescalers(RCC_AHB1PrescalerTypeDef AHB1
 {
     uint32_t CFGRtmp = RCC->CFGR;
 
-    CFGRtmp = (CFGRtmp & ~RCC_CFGR_HPRE_MASK) | AHB1Prescaler;
+    CFGRtmp = (CFGRtmp & ~RCC_CFGR_HPRE_MASK)  | AHB1Prescaler;
     CFGRtmp = (CFGRtmp & ~RCC_CFGR_PPRE1_MASK) | APB1Prescaler;
     CFGRtmp = (CFGRtmp & ~RCC_CFGR_PPRE2_MASK) | APB2Prescaler;
 
