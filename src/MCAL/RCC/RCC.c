@@ -35,6 +35,15 @@
 #define RCC_PLLCFGR_PLLQ_OFFSET (24)
 #define RCC_PLLCFGR_PLLQ_MASK ((uint32_t)0xF << RCC_PLLCFGR_PLLQ_OFFSET)
 
+#define RCC_CFGR_HPRE_OFFSET (4)
+#define RCC_CFGR_HPRE_MASK ((uint32_t)0xF << RCC_CFGR_HPRE_OFFSET)
+
+#define RCC_CFGR_PPRE1_OFFSET (10)
+#define RCC_CFGR_PPRE1_MASK ((uint32_t)0x7 << RCC_CFGR_PPRE1_OFFSET)
+
+#define RCC_CFGR_PPRE2_OFFSET (13)
+#define RCC_CFGR_PPRE2_MASK ((uint32_t)0x7 << RCC_CFGR_PPRE2_OFFSET)
+
 #define RCC_TIMEOUT_VAL     (600)
 /************************************/
 /***************Registers************/
@@ -207,5 +216,18 @@ MCAL_StatusTypeDef RCC_disableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peri
 MCAL_StatusTypeDef RCC_disableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral)
 {
     RCC->APB2ENR &= ~APB2Peripheral;
+    return MCAL_OK;
+}
+
+MCAL_StatusTypeDef RCC_selectSystemClockPrescalers(RCC_AHB1PrescalerTypeDef AHB1Prescaler, RCC_APB1PrescalerTypeDef APB1Prescaler, RCC_APB2PrescalerTypeDef APB2Prescaler)
+{
+    uint32_t CFGRtmp = RCC->CFGR;
+
+    CFGRtmp = (CFGRtmp & ~RCC_CFGR_HPRE_MASK) | AHB1Prescaler;
+    CFGRtmp = (CFGRtmp & ~RCC_CFGR_PPRE1_MASK) | APB1Prescaler;
+    CFGRtmp = (CFGRtmp & ~RCC_CFGR_PPRE2_MASK) | APB2Prescaler;
+
+    RCC->CFGR = CFGRtmp;
+
     return MCAL_OK;
 }
