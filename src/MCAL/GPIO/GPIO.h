@@ -122,6 +122,15 @@ typedef enum
     GPIO_SPEED_VERY_HIGH    /**< Very high speed. */
 } GPIO_PinSpeedTypeDef;
 
+
+typedef enum 
+{
+    GPIO_PINSTATE_RESET,
+    GPIO_PINSTATE_SET
+}
+GPIO_PinStateTypeDef;
+
+
 /**
  * @brief Structure to configure GPIO pin settings.
  *
@@ -137,6 +146,7 @@ typedef struct
     GPIO_PinSpeedTypeDef   PinSpeed;    /**< Speed setting for the GPIO pin. */
 } GPIO_PinConfigTypeDef;
 
+
 /********************************************************************************************************/
 /************************************************APIs****************************************************/
 /********************************************************************************************************/
@@ -151,6 +161,27 @@ typedef struct
  */
 MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef PinConfig);
 
-/*GPIO_setPinValue()*/
-/*GPIO_getPinValue()*/
+/**
+ * @brief Sets the value of a GPIO pin.
+ *
+ * This function sets the specified GPIO pin to the given state (High or Low).
+ *
+ * @param[in] Port The GPIO port to which the pin belongs.
+ * @param[in] PinNumber The specific GPIO pin number.
+ * @param[in] PinState The desired state of the GPIO pin (GPIO_PIN_HIGH or GPIO_PIN_LOW).
+ * @return Status indicating the success or failure of the initialization @ref MCAL_StatusTypeDef.
+ */
+MCAL_StatusTypeDef GPIO_setPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber, GPIO_PinStateTypeDef PinState);
+
+/**
+ * @brief Gets the current value of a GPIO pin.
+ *
+ * This function retrieves the current state (High or Low) of the specified GPIO pin.
+ *
+ * @param[in] Port The GPIO port to which the pin belongs.
+ * @param[in] PinNumber The specific GPIO pin number.
+ * @return The current state of the GPIO pin  @ref GPIO_PinStateTypeDef.
+ */
+GPIO_PinStateTypeDef GPIO_getPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber);
+
 #endif /* GPIO_GPIO_H_ */
