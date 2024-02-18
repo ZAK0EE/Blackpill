@@ -37,8 +37,6 @@ typedef enum
     GPIO_GPIOC, /**< GPIO port C. */
     GPIO_GPIOD, /**< GPIO port D. */
     GPIO_GPIOE, /**< GPIO port E. */
-    GPIO_GPIOF, /**< GPIO port F. */
-    GPIO_GPIOG, /**< GPIO port G. */
     GPIO_GPIOH  /**< GPIO port H. */
 } GPIO_PortTypeDef;
 
