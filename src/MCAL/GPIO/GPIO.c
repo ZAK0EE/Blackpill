@@ -76,6 +76,7 @@ MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef *PinConfig)
 {
     GPIO_TypeDef* GPIO = GPIOS[PinConfig->Port];
 
+    /* Decoding the PinMode */
     uint32_t PinMode = PinConfig->PinMode & 0x00FUL;
     uint32_t PinPull = (PinConfig->PinMode & 0x0F0UL) >> 4;
     uint32_t PinOutputType = (PinConfig->PinMode & 0xF00UL) >> 8;
