@@ -16,7 +16,8 @@
 /********************************************************************************************************/
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
-
+#define MASK_1BIT  (0x1UL)
+#define MASK_2BITS (0X3UL)
 /************************************/
 /***************Registers************/
 /************************************/
@@ -28,7 +29,6 @@
 #define GPIOH_BASE (0x40021C00UL)
 
 
-#define GPIO ((RCC_TypeDef* const)(RCC_BASE))
 /********************************************************************************************************/
 /************************************************Types***************************************************/
 /********************************************************************************************************/
@@ -67,3 +67,34 @@ GPIO_TypeDef* GPIOS[] = {GPIOA_BASE, GPIOB_BASE, GPIOC_BASE, GPIOD_BASE, GPIOE_B
 /********************************************************************************************************/
 /*********************************************APIs Implementation****************************************/
 /********************************************************************************************************/
+
+MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef *PinConfig)
+{
+    GPIO_TypeDef* GPIO = GPIOS[PinConfig->Port];
+
+    uint32_t PinMode = PinConfig->PinMode & 0x00FUL;
+    uint32_t PinPull = (PinConfig->PinMode & 0x0F0UL) >> 4;
+    uint32_t PinOutputType = (PinConfig->PinMode & 0xF00UL) >> 8;
+
+    /* Set Pin Mode */
+    GPIO->MODER = GPIO->MODER & ~(MASK_2BITS << (PinConfig->PinNumber * 2)) | (PinMode << (PinConfig->PinNumber * 2));
+
+    GPIO->PUPDR = GPIO->PUPDR & ~(MASK_2BITS << (PinConfig->PinNumber * 2)) | (PinPull << (PinConfig->PinNumber * 2));
+
+    GPIO->OTYPER = GPIO->OTYPER & ~(MASK_1BIT << PinConfig->PinNumber) | (PinOutputType << PinConfig->PinNumber);
+
+    /* Set Pin Speed */
+    GPIO->OSPEEDR = GPIO->OSPEEDR & ~(MASK_2BITS << (PinConfig->PinNumber * 2)) | (PinConfig->PinSpeed << (PinConfig->PinNumber * 2));
+
+    return MCAL_OK;
+}
+
+MCAL_StatusTypeDef GPIO_setPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber, GPIO_PinStateTypeDef PinState)
+{
+
+}
+
+GPIO_PinStateTypeDef GPIO_getPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber)
+{
+
+}
