@@ -59,10 +59,10 @@ typedef struct {
 /********************************************************************************************************/
 /************************************************Variables***********************************************/
 /********************************************************************************************************/
-GPIO_TypeDef* GPIOS[] = 
+GPIO_TypeDef *const GPIOS[] = 
 {
-    (GPIO_TypeDef*)GPIOA_BASE, (GPIO_TypeDef*)GPIOB_BASE, (GPIO_TypeDef*)GPIOC_BASE, 
-    (GPIO_TypeDef*)GPIOD_BASE, (GPIO_TypeDef*)GPIOE_BASE, (GPIO_TypeDef*)GPIOH_BASE,
+    (GPIO_TypeDef*const)GPIOA_BASE, (GPIO_TypeDef*const)GPIOB_BASE, (GPIO_TypeDef*const)GPIOC_BASE, 
+    (GPIO_TypeDef*const)GPIOD_BASE, (GPIO_TypeDef*const)GPIOE_BASE, (GPIO_TypeDef*const)GPIOH_BASE,
 };
 /********************************************************************************************************/
 /*****************************************Static Functions Prototype*************************************/
