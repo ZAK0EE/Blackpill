@@ -9,8 +9,8 @@
  * 
  */
 
-#ifndef RCC_RCC_H_
-#define RCC_RCC_H_
+#ifndef MCAL_RCC_RCC_H_
+#define MCAL_RCC_RCC_H_
 
 /********************************************************************************************************/
 /************************************************Includes************************************************/
@@ -309,4 +309,4 @@ MCAL_StatusTypeDef RCC_disableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peri
  */
 MCAL_StatusTypeDef RCC_disableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral);
 
-#endif /* RCC_RCC_H_ */
+#endif // MCAL_RCC_RCC_H_

@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2024
  * 
  */
-#ifndef GPIO_GPIO_H_
-#define GPIO_GPIO_H_
+#ifndef MCAL_GPIO_GPIO_H_
+#define MCAL_GPIO_GPIO_H_
 
 /********************************************************************************************************/
 /************************************************Includes************************************************/
@@ -182,4 +182,4 @@ MCAL_StatusTypeDef GPIO_setPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNu
  */
 GPIO_PinStateTypeDef GPIO_getPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber);
 
-#endif /* GPIO_GPIO_H_ */
+#endif // MCAL_GPIO_GPIO_H_
