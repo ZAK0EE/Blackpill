@@ -1,6 +1,8 @@
-#ifndef ASSERT_H_
-#define ASSERT_H_
+#ifndef ASSERTPARAM_H_
+#define ASSERTPARAM_H_
 
+
+#include <stdint.h>
 /* ########################## Assert Selection ############################## */
 /**
   * @brief Uncomment the line below to expanse the "assert_param" macro in the 
@@ -28,4 +30,4 @@
 
 
 
-#endif // ASSERT_H_
+#endif // ASSERTPARAM_H_
