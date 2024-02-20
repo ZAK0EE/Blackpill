@@ -1,6 +1,13 @@
 #include "MCAL/RCC/RCC.h"
 #include "MCAL/stm32f401.h"
 #include <stdio.h>
+#include "assertparam.h"
+
+void assert_failed(uint8_t* file, uint32_t line)
+{
+    while(1);
+}
+
 int main()
 {
     RCC_selectSystemClock(RCC_SYSTEMCLOCK_HSI);
