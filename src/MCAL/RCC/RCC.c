@@ -13,7 +13,7 @@
 /************************************************Includes************************************************/
 /********************************************************************************************************/
 #include "MCAL/RCC/RCC.h"
-
+#include "assertparam.h"
 /********************************************************************************************************/
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
@@ -52,6 +52,83 @@
 
 
 #define RCC ((RCC_TypeDef* const)(RCC_BASE))
+
+/************************************/
+/***************Verifiers************/
+/************************************/
+
+#define IS_RCC_CLOCK(TYPE) (((TYPE) == RCC_CLOCK_HSI) || \
+                                 ((TYPE) == RCC_CLOCK_HSE) || \
+                                 ((TYPE) == RCC_CLOCK_PLL) || \
+                                 ((TYPE) == RCC_CLOCK_PLLI2S))
+
+#define IS_RCC_SYSTEMCLOCK(CLOCK) (((CLOCK) == RCC_SYSTEMCLOCK_HSI) || \
+                                    ((CLOCK) == RCC_SYSTEMCLOCK_HSE) || \
+                                    ((CLOCK) == RCC_SYSTEMCLOCK_PLL))
+
+#define IS_RCC_AHB1PERIPHERAL(PERIPHERAL) (((PERIPHERAL) == RCC_AHB1PERIPHERAL_GPIOA) || \
+                                           ((PERIPHERAL) == RCC_AHB1PERIPHERAL_GPIOB) || \
+                                           ((PERIPHERAL) == RCC_AHB1PERIPHERAL_GPIOC) || \
+                                           ((PERIPHERAL) == RCC_AHB1PERIPHERAL_GPIOD) || \
+                                           ((PERIPHERAL) == RCC_AHB1PERIPHERAL_GPIOE) || \
+                                           ((PERIPHERAL) == RCC_AHB1PERIPHERAL_GPIOH) || \
+                                           ((PERIPHERAL) == RCC_AHB1PERIPHERAL_CRC)   || \
+                                           ((PERIPHERAL) == RCC_AHB1PERIPHERAL_DMA1)  || \
+                                           ((PERIPHERAL) == RCC_AHB1PERIPHERAL_DMA2))
+
+#define IS_RCC_AHB2PERIPHERAL(PERIPHERAL) ((PERIPHERAL) == RCC_AHB2PERIPHERAL_OTGFS)
+
+#define IS_RCC_APB1PERIPHERAL(PERIPHERAL) (((PERIPHERAL) == RCC_APB1PERIPHERAL_TIM2)   || \
+                                           ((PERIPHERAL) == RCC_APB1PERIPHERAL_TIM3)   || \
+                                           ((PERIPHERAL) == RCC_APB1PERIPHERAL_TIM4)   || \
+                                           ((PERIPHERAL) == RCC_APB1PERIPHERAL_TIM5)   || \
+                                           ((PERIPHERAL) == RCC_APB1PERIPHERAL_WWDG)   || \
+                                           ((PERIPHERAL) == RCC_APB1PERIPHERAL_SPI2)   || \
+                                           ((PERIPHERAL) == RCC_APB1PERIPHERAL_SPI3)   || \
+                                           ((PERIPHERAL) == RCC_APB1PERIPHERAL_USART2) || \
+                                           ((PERIPHERAL) == RCC_APB1PERIPHERAL_I2C1)   || \
+                                           ((PERIPHERAL) == RCC_APB1PERIPHERAL_I2C2)   || \
+                                           ((PERIPHERAL) == RCC_APB1PERIPHERAL_I2C3)   || \
+                                           ((PERIPHERAL) == RCC_APB1PERIPHERAL_PWR))
+
+#define IS_RCC_APB2PERIPHERAL(PERIPHERAL) (((PERIPHERAL) == RCC_APB2PERIPHERAL_TIM1)   || \
+                                           ((PERIPHERAL) == RCC_APB2PERIPHERAL_USART1) || \
+                                           ((PERIPHERAL) == RCC_APB2PERIPHERAL_USART6) || \
+                                           ((PERIPHERAL) == RCC_APB2PERIPHERAL_ADC1)   || \
+                                           ((PERIPHERAL) == RCC_APB2PERIPHERAL_SDI0)   || \
+                                           ((PERIPHERAL) == RCC_APB2PERIPHERAL_SPI1)   || \
+                                           ((PERIPHERAL) == RCC_APB2PERIPHERAL_SPI4)   || \
+                                           ((PERIPHERAL) == RCC_APB2PERIPHERAL_SYSCFG) || \
+                                           ((PERIPHERAL) == RCC_APB2PERIPHERAL_TMI9)   || \
+                                           ((PERIPHERAL) == RCC_APB2PERIPHERAL_TIM10)  || \
+                                           ((PERIPHERAL) == RCC_APB2PERIPHERAL_TIM11))
+
+#define IS_RCC_PLL_SOURCE(SOURCE) (((SOURCE) == RCC_PLLSRC_HSI) || \
+                                   ((SOURCE) == RCC_PLLSRC_HSE))
+
+#define IS_RCC_AHB1PRESCALER(PRESCALER) (((PRESCALER) == RCC_AHB1PRESCALER_0)   || \
+                                          ((PRESCALER) == RCC_AHB1PRESCALER_2)   || \
+                                          ((PRESCALER) == RCC_AHB1PRESCALER_4)   || \
+                                          ((PRESCALER) == RCC_AHB1PRESCALER_8)   || \
+                                          ((PRESCALER) == RCC_AHB1PRESCALER_16)  || \
+                                          ((PRESCALER) == RCC_AHB1PRESCALER_64)  || \
+                                          ((PRESCALER) == RCC_AHB1PRESCALER_128) || \
+                                          ((PRESCALER) == RCC_AHB1PRESCALER_256) || \
+                                          ((PRESCALER) == RCC_AHB1PRESCALER_512))
+
+#define IS_RCC_APB1PRESCALER(PRESCALER) (((PRESCALER) == RCC_APB1PRESCALER_0)   || \
+                                          ((PRESCALER) == RCC_APB1PRESCALER_2)   || \
+                                          ((PRESCALER) == RCC_APB1PRESCALER_4)   || \
+                                          ((PRESCALER) == RCC_APB1PRESCALER_8)   || \
+                                          ((PRESCALER) == RCC_APB1PRESCALER_16))
+
+#define IS_RCC_APB2PRESCALER(PRESCALER) (((PRESCALER) == RCC_APB2PRESCALER_0)   || \
+                                          ((PRESCALER) == RCC_APB2PRESCALER_2)   || \
+                                          ((PRESCALER) == RCC_APB2PRESCALER_4)   || \
+                                          ((PRESCALER) == RCC_APB2PRESCALER_8)   || \
+                                          ((PRESCALER) == RCC_APB2PRESCALER_16))
+
+
 
 /********************************************************************************************************/
 /************************************************Types***************************************************/
@@ -105,8 +182,10 @@ typedef struct
 /*********************************************APIs Implementation****************************************/
 /********************************************************************************************************/
 
-MCAL_StatusTypeDef RCC_enableClock(RCC_SystemClockTypeDef Clock)
+MCAL_StatusTypeDef RCC_enableClock(RCC_ClockTypeDef Clock)
 {
+    assert_param(IS_RCC_CLOCK(Clock));
+
     /* Enable the clock*/
     RCC->CR |= Clock;
     uint32_t clockStatusMask = (Clock << 1);
@@ -117,8 +196,10 @@ MCAL_StatusTypeDef RCC_enableClock(RCC_SystemClockTypeDef Clock)
     return (RCC->CR & clockStatusMask)? MCAL_OK : MCAL_TIMEOUT;
 }
 
-MCAL_StatusTypeDef RCC_disableClock(RCC_SystemClockTypeDef Clock)
+MCAL_StatusTypeDef RCC_disableClock(RCC_ClockTypeDef Clock)
 {
+    assert_param(IS_RCC_CLOCK(Clock));
+
     RCC->CR &= ~Clock;
     return MCAL_OK;
 }
@@ -126,6 +207,9 @@ MCAL_StatusTypeDef RCC_disableClock(RCC_SystemClockTypeDef Clock)
 
 MCAL_StatusTypeDef RCC_selectSystemClock(RCC_SystemClockTypeDef SystemClock)
 {
+
+    assert_param(IS_RCC_SYSTEMCLOCK(SystemClock));
+
     uint32_t CFGRtmp = RCC->CFGR;
     CFGRtmp = (CFGRtmp & ~RCC_CFGR_SW_MASK) | (uint32_t)SystemClock;
 
@@ -146,6 +230,7 @@ MCAL_StatusTypeDef RCC_configurePLLClock(RCC_PLLConfigTypeDef *PLLConfig)
 {
     uint32_t PLLCFGRtmp = RCC->PLLCFGR;
 
+    assert_param(IS_RCC_PLL_SOURCE(PLLConfig->PLLSrc));
     PLLCFGRtmp = (PLLCFGRtmp & ~RCC_PLLCFGR_PLLSRC_MASK) | (uint32_t)PLLConfig->PLLSrc;
 
     /* Trim the prescaler value using its mask */
@@ -169,6 +254,8 @@ MCAL_StatusTypeDef RCC_configurePLLClock(RCC_PLLConfigTypeDef *PLLConfig)
 
 MCAL_StatusTypeDef RCC_enableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peripheral)
 {
+    assert_param(IS_RCC_AHB1PERIPHERAL(AHB1Peripheral));
+
     RCC->AHB1ENR |= AHB1Peripheral;
     return MCAL_OK;
 }
@@ -176,48 +263,66 @@ MCAL_StatusTypeDef RCC_enableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Perip
 
 MCAL_StatusTypeDef RCC_enableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peripheral)
 {
+    assert_param(IS_RCC_AHB2PERIPHERAL(AHB2Peripheral));
+
     RCC->AHB2ENR |= AHB2Peripheral;
     return MCAL_OK;
 }
 
 MCAL_StatusTypeDef RCC_enableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peripheral)
 {
+    assert_param(IS_RCC_APB1PERIPHERAL(APB1Peripheral));
+
     RCC->APB1ENR |= APB1Peripheral;
     return MCAL_OK;
 }
 
 MCAL_StatusTypeDef RCC_enableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral)
 {
+    assert_param(IS_RCC_APB2PERIPHERAL(APB2Peripheral));
+
     RCC->APB2ENR |= APB2Peripheral;
     return MCAL_OK;
 }
 
 MCAL_StatusTypeDef RCC_disableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peripheral)
 {
+    assert_param(IS_RCC_AHB1PERIPHERAL(AHB1Peripheral));
+
     RCC->AHB1ENR &= ~AHB1Peripheral;
     return MCAL_OK;
 }
 
 MCAL_StatusTypeDef RCC_disableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peripheral)
 {
+    assert_param(IS_RCC_AHB2PERIPHERAL(AHB2Peripheral));
+
     RCC->AHB2ENR &= ~AHB2Peripheral;
     return MCAL_OK;
 }
 
 MCAL_StatusTypeDef RCC_disableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peripheral)
 {
+    assert_param(IS_RCC_APB1PERIPHERAL(APB1Peripheral));
+
     RCC->APB1ENR &= ~APB1Peripheral;
     return MCAL_OK;
 }
 
 MCAL_StatusTypeDef RCC_disableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral)
 {
+    assert_param(IS_RCC_APB2PERIPHERAL(APB2Peripheral));
+
     RCC->APB2ENR &= ~APB2Peripheral;
     return MCAL_OK;
 }
 
 MCAL_StatusTypeDef RCC_selectSystemClockPrescalers(RCC_AHB1PrescalerTypeDef AHB1Prescaler, RCC_APB1PrescalerTypeDef APB1Prescaler, RCC_APB2PrescalerTypeDef APB2Prescaler)
 {
+    assert_param(IS_RCC_AHB1PRESCALER(AHB1Prescaler));
+    assert_param(IS_RCC_APB1PRESCALER(APB1Prescaler));
+    assert_param(IS_RCC_APB2PRESCALER(APB2Prescaler));
+
     uint32_t CFGRtmp = RCC->CFGR;
 
     CFGRtmp = (CFGRtmp & ~RCC_CFGR_HPRE_MASK)  | AHB1Prescaler;
