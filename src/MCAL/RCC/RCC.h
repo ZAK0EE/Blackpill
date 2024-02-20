@@ -25,6 +25,9 @@
 /************************************************Types***************************************************/
 /********************************************************************************************************/
 
+/***************************************************/
+/**********************Enums************************/
+/***************************************************/
 /**
  * @brief Enumeration defining clock sources for the RCC (Reset and Clock Control) module.
  */
@@ -126,19 +129,6 @@ typedef enum
 
 
 /**
- * @brief Structure to configure the PLL (Phase-Locked Loop) in the RCC (Reset and Clock Control) module.
- */
-typedef struct 
-{
-    RCC_PLLSrcTypeDef PLLSrc;                  /**< PLL Source: The source of the PLL clock. */
-    uint8_t PLLM;                              /**< PLL Division Factor M: Division factor for the main PLL input clock. */
-    uint16_t PLLN;                             /**< PLL Multiplication Factor N: PLL multiplication factor for VCO (Voltage-Controlled Oscillator). */
-    uint8_t PLLP;                              /**< PLL Division Factor P: Division factor for the main system clock. */
-    uint8_t PLLQ;                              /**< Main PLL (PLL) division factor for USB OTG FS, SDIO and random number generator clocks */
-
-} RCC_PLLConfigTypeDef;
-
-/**
  * @brief Enumeration defining AHB1 prescaler values for the RCC (Reset and Clock Control) module.
  */
 typedef enum 
@@ -182,6 +172,23 @@ typedef enum
 
 } RCC_APB2PrescalerTypeDef;
 
+
+/***************************************************/
+/**********************Structs**********************/
+/***************************************************/
+
+/**
+ * @brief Structure to configure the PLL (Phase-Locked Loop) in the RCC (Reset and Clock Control) module.
+ */
+typedef struct 
+{
+    RCC_PLLSrcTypeDef PLLSrc;                  /**< PLL Source: The source of the PLL clock. */
+    uint8_t PLLM;                              /**< PLL Division Factor M: Division factor for the main PLL input clock. */
+    uint16_t PLLN;                             /**< PLL Multiplication Factor N: PLL multiplication factor for VCO (Voltage-Controlled Oscillator). */
+    uint8_t PLLP;                              /**< PLL Division Factor P: Division factor for the main system clock. */
+    uint8_t PLLQ;                              /**< Main PLL (PLL) division factor for USB OTG FS, SDIO and random number generator clocks */
+
+} RCC_PLLConfigTypeDef;
 /********************************************************************************************************/
 /************************************************APIs****************************************************/
 /********************************************************************************************************/
