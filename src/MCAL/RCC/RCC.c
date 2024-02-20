@@ -54,7 +54,7 @@
 #define RCC ((RCC_TypeDef* const)(RCC_BASE))
 
 /************************************/
-/***************Verifiers************/
+/***************Validators************/
 /************************************/
 
 #define IS_RCC_CLOCK(TYPE) (((TYPE) == RCC_CLOCK_HSI) || \
@@ -188,7 +188,7 @@ MCAL_StatusTypeDef RCC_enableClock(RCC_ClockTypeDef Clock)
 
     /* Enable the clock*/
     RCC->CR |= Clock;
-    uint32_t clockStatusMask = (Clock << 1);
+    uint32_t clockStatusMask = ((uint32_t)Clock << 1UL);
 
     uint32_t timeout = RCC_TIMEOUT_VAL;
     while(!(RCC->CR & clockStatusMask) && timeout){timeout--;}
