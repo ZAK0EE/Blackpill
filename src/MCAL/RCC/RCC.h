@@ -195,15 +195,15 @@ typedef enum
  * @note Ensure that the necessary PLL configurations are set before enabling the clock.
  * @note Clock will be enabled only if it is ready
  */
-MCAL_StatusTypeDef RCC_enableClock(RCC_SystemClockTypeDef Clock);
+MCAL_StatusTypeDef RCC_enableClock(RCC_ClockTypeDef Clock);
 
 /**
  * @brief Disable a specific clock source given as a parameter
  *
- * @param Clock The system component for which the clock needs to be disabled (see @ref RCC_SystemClockTypeDef).
+ * @param Clock The system component for which the clock needs to be disabled (see @ref RCC_ClockTypeDef).
  * @return Status of the operation. See @ref MCAL_StatusTypeDef for possible values.
  */
-MCAL_StatusTypeDef RCC_disableClock(RCC_SystemClockTypeDef Clock);
+MCAL_StatusTypeDef RCC_disableClock(RCC_ClockTypeDef Clock);
 
 /**
  * @brief Selects the system clock source
