@@ -28,6 +28,44 @@
 #define GPIOE_BASE (0x40021000UL)
 #define GPIOH_BASE (0x40021C00UL)
 
+#define NUM_OF_GPIOS (6)
+
+/************************************/
+/***************Validators************/
+/************************************/
+#define IS_GPIO_PORT(PORT) (((PORT) == GPIO_GPIOA) || \
+                            ((PORT) == GPIO_GPIOB) || \
+                            ((PORT) == GPIO_GPIOC) || \
+                            ((PORT) == GPIO_GPIOD) || \
+                            ((PORT) == GPIO_GPIOE) || \
+                            ((PORT) == GPIO_GPIOH))
+
+#define IS_GPIO_PIN(PIN) (((PIN) >= GPIO_PIN0) && ((PIN) <= GPIO_PIN15))
+
+#define IS_GPIO_MODE(MODE) (((MODE) == GPIO_MODE_INPUT_NOPULL)           || \
+                            ((MODE) == GPIO_MODE_INPUT_PULLUP)           || \
+                            ((MODE) == GPIO_MODE_INPUT_PULLDOWN)         || \
+                            ((MODE) == GPIO_MODE_INPUT_ANALOG)           || \
+                            ((MODE) == GPIO_MODE_OUTPUT_PUSHPULL_NOPULL) || \
+                            ((MODE) == GPIO_MODE_OUTPUT_PUSHPULL_PULLUP) || \
+                            ((MODE) == GPIO_MODE_OUTPUT_PUSHPULL_PULLDOWN) || \
+                            ((MODE) == GPIO_MODE_OUTPUT_OPENDRAIN_NOPULL) || \
+                            ((MODE) == GPIO_MODE_OUTPUT_OPENDRAIN_PULLUP) || \
+                            ((MODE) == GPIO_MODE_OUTPUT_OPENDRAIN_PULLDOWN) || \
+                            ((MODE) == GPIO_MODE_ALTERNATE_PUSHPULL_NOPULL) || \
+                            ((MODE) == GPIO_MODE_ALTERNATE_PUSHPULL_PULLUP) || \
+                            ((MODE) == GPIO_MODE_ALTERNATE_PUSHPULL_PULLDOWN) || \
+                            ((MODE) == GPIO_MODE_ALTERNATE_OPENDRAIN_NOPULL) || \
+                            ((MODE) == GPIO_MODE_ALTERNATE_OPENDRAIN_PULLUP) || \
+                            ((MODE) == GPIO_MODE_ALTERNATE_OPENDRAIN_PULLDOWN))
+
+#define IS_GPIO_SPEED(SPEED) (((SPEED) == GPIO_SPEED_LOW)       || \
+                              ((SPEED) == GPIO_SPEED_MEDIUM)    || \
+                              ((SPEED) == GPIO_SPEED_HIGH)      || \
+                              ((SPEED) == GPIO_SPEED_VERY_HIGH))
+
+#define IS_GPIO_PIN_STATE(STATE) (((STATE) == GPIO_PINSTATE_RESET) || \
+                                  ((STATE) == GPIO_PINSTATE_SET))
 
 /********************************************************************************************************/
 /************************************************Types***************************************************/
@@ -59,11 +97,16 @@ typedef struct {
 /********************************************************************************************************/
 /************************************************Variables***********************************************/
 /********************************************************************************************************/
-GPIO_TypeDef *const GPIOS[] = 
-{
-    (GPIO_TypeDef*const)GPIOA_BASE, (GPIO_TypeDef*const)GPIOB_BASE, (GPIO_TypeDef*const)GPIOC_BASE, 
-    (GPIO_TypeDef*const)GPIOD_BASE, (GPIO_TypeDef*const)GPIOE_BASE, (GPIO_TypeDef*const)GPIOH_BASE,
+
+GPIO_TypeDef volatile *const GPIOS[NUM_OF_GPIOS] = {
+    [GPIO_GPIOA]=(GPIO_TypeDef volatile *const)GPIOA_BASE,
+    [GPIO_GPIOB]=(GPIO_TypeDef volatile *const)GPIOB_BASE,
+    [GPIO_GPIOC]=(GPIO_TypeDef volatile *const)GPIOC_BASE,
+    [GPIO_GPIOD]=(GPIO_TypeDef volatile *const)GPIOD_BASE,
+    [GPIO_GPIOE]=(GPIO_TypeDef volatile *const)GPIOE_BASE,
+    [GPIO_GPIOH]=(GPIO_TypeDef volatile *const)GPIOH_BASE,
 };
+
 /********************************************************************************************************/
 /*****************************************Static Functions Prototype*************************************/
 /********************************************************************************************************/
@@ -74,7 +117,7 @@ GPIO_TypeDef *const GPIOS[] =
 
 MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef *PinConfig)
 {
-    GPIO_TypeDef* GPIO = GPIOS[PinConfig->Port];
+    GPIO_TypeDef volatile *const GPIO = GPIOS[PinConfig->Port];
 
     /* Decoding the PinMode */
     uint32_t PinMode = PinConfig->PinMode & 0x00FUL;
@@ -96,14 +139,14 @@ MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef *PinConfig)
 
 MCAL_StatusTypeDef GPIO_setPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber, GPIO_PinStateTypeDef PinState)
 {
-    GPIO_TypeDef* GPIO = GPIOS[Port];
+    GPIO_TypeDef volatile *const GPIO = GPIOS[Port];
     GPIO->ODR = (GPIO->ODR & ~(MASK_1BIT << PinNumber)) | (PinState << PinNumber);
     return MCAL_OK;
 }
 
 GPIO_PinStateTypeDef GPIO_getPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber)
 {
-    GPIO_TypeDef* GPIO = GPIOS[Port];
+    GPIO_TypeDef volatile *const GPIO = GPIOS[Port];
 
     uint32_t PinValue = (GPIO->IDR >> PinNumber) & MASK_1BIT;
 
