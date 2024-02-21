@@ -18,6 +18,12 @@
 /********************************************************************************************************/
 #define MASK_1BIT  (0x1UL)
 #define MASK_2BITS (0X3UL)
+
+#define GPIO_PINMODE_GET_MODE(PinMode) (PinMode & 0x00FUL)
+#define GPIO_PINMODE_GET_PULL(PinMode) ((PinMode & 0x0F0UL) >> 4)
+#define GPIO_PINMODE_GET_OUTPUT_TYPE(PinMode) ((PinMode & 0xF00UL) >> 8)
+
+
 /************************************/
 /***************Registers************/
 /************************************/
@@ -119,10 +125,16 @@ MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef *PinConfig)
 {
     GPIO_TypeDef volatile *const GPIO = GPIOS[PinConfig->Port];
 
+    assert_param(IS_GPIO_PORT(PinConfig->Port));
+    assert_param(IS_GPIO_PIN(PinConfig->PinNumber));
+    assert_param(IS_GPIO_SPEED(PinConfig->PinSpeed));
+    assert_param(IS_GPIO_MODE(PinConfig->PinMode));
+
     /* Decoding the PinMode */
-    uint32_t PinMode = PinConfig->PinMode & 0x00FUL;
-    uint32_t PinPull = (PinConfig->PinMode & 0x0F0UL) >> 4;
-    uint32_t PinOutputType = (PinConfig->PinMode & 0xF00UL) >> 8;
+    uint32_t PinMode = GPIO_PINMODE_GET_MODE(PinConfig->PinMode);
+    uint32_t PinPull = GPIO_PINMODE_GET_PULL(PinConfig->PinMode);
+    uint32_t PinOutputType = GPIO_PINMODE_GET_OUTPUT_TYPE(PinConfig->PinMode);
+
 
     /* Set Pin Mode */
     GPIO->MODER = (GPIO->MODER & ~(MASK_2BITS << (PinConfig->PinNumber * 2))) | (PinMode << (PinConfig->PinNumber * 2));
@@ -139,6 +151,10 @@ MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef *PinConfig)
 
 MCAL_StatusTypeDef GPIO_setPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber, GPIO_PinStateTypeDef PinState)
 {
+    assert_param(IS_GPIO_PORT(Port));
+    assert_param(IS_GPIO_PIN(PinNumber));
+    assert_param(IS_GPIO_PIN_STATE(PinState));
+
     GPIO_TypeDef volatile *const GPIO = GPIOS[Port];
     GPIO->ODR = (GPIO->ODR & ~(MASK_1BIT << PinNumber)) | (PinState << PinNumber);
     return MCAL_OK;
@@ -146,6 +162,10 @@ MCAL_StatusTypeDef GPIO_setPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNu
 
 GPIO_PinStateTypeDef GPIO_getPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber)
 {
+
+    assert_param(IS_GPIO_PORT(Port));
+    assert_param(IS_GPIO_PIN(PinNumber));
+    
     GPIO_TypeDef volatile *const GPIO = GPIOS[Port];
 
     uint32_t PinValue = (GPIO->IDR >> PinNumber) & MASK_1BIT;
