@@ -220,6 +220,8 @@ MCAL_StatusTypeDef RCC_selectSystemClock(RCC_SystemClockTypeDef SystemClock)
 
 MCAL_StatusTypeDef RCC_getSystemClock(RCC_SystemClockTypeDef *SystemClock)
 {
+    assert_param(SystemClock);
+
     *SystemClock = (((RCC->CFGR) & RCC_CFGR_SWS_MASK) >> 2);
 
     return MCAL_OK;
