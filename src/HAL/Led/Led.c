@@ -16,6 +16,7 @@ LED_Error_t LED_Init(void)
 {
     LED_Error_t RetErrorStatus = LED_OK;
 
+    /* Initialize each LED based on the configuration */
     GPIO_PinConfigTypeDef CurrentLed;
     for (uint32_t LedCounter = 0; LedCounter < (uint32_t) _NUM_OF_LEDS; LedCounter++)
     {
