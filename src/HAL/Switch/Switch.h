@@ -54,8 +54,8 @@ typedef enum {
 
 /* Structure to hold Switch configurations */
 typedef struct {
-    uint8_t PortID;              /**< Port ID associated with the Switch */
-    uint8_t PinNum;              /**< Pin number associated with the Switch */
+    uint32_t PortID;              /**< Port ID associated with the Switch */
+    uint32_t PinNum;              /**< Pin number associated with the Switch */
     Switch_InternalPullupConfig_t PUConfig; /**< Configuration for internal pull-up */
     Switch_ActiveType_t ActiveType; /**< Active type of the Switch (high/low) */
 } Switch_Config_t;
