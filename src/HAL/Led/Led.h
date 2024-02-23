@@ -20,6 +20,7 @@
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
 
+
 /********************************************************************************************************/
 /************************************************Types***************************************************/
 /********************************************************************************************************/
@@ -55,6 +56,7 @@ typedef struct {
     uint8_t PortID;               /**< Port ID associated with the LED */
     uint8_t PinNum;               /**< Pin number associated with the LED */
     LED_ActiveType_t ActiveType;  /**< Active type of the LED (high/low) */
+    LED_State_t LedInitState;     /**< Initial state of the LED(ON/OFF) */
 } LED_Config_t;
 
 /** Array to store LED configurations. Configurations should be set before calling LED_Init. */

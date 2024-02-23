@@ -35,6 +35,7 @@
         .PortID = 0,
         .PinNum = 0,
         .ActiveType = LED_ACTIVEHIGH,
+        .LedInitState = LED_ON,
 	},
     
 	[LED_YELLOW]=
@@ -42,6 +43,7 @@
         .PortID = 0,
         .PinNum = 1,
         .ActiveType = LED_ACTIVEHIGH,
+        .LedInitState = LED_ON,
 	},    
 
  };
