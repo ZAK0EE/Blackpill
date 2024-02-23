@@ -33,7 +33,6 @@ int main()
     }
 
 
-    int x = 0;
       while (1)
     {
         GPIO_setPinValue(GPIO_GPIOA, GPIO_PIN0, GPIO_PINSTATE_SET);
