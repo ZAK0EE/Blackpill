@@ -75,7 +75,7 @@ LED_Error_t LED_Init(void)
         CurrentPin.PinNumber = (GPIO_PinTypeDef)CurrentLedConfig->PinNum;
         CurrentPin.PinSpeed = GPIO_SPEED_MEDIUM;
         CurrentPin.PinMode = (CurrentLedConfig->ActiveType == LED_ACTIVEHIGH ) ?
-                             GPIO_MODE_OUTPUT_PUSHPULL_PULLDOWN : GPIO_MODE_OUTPUT_PUSHPULL_PULLUP;
+                     GPIO_MODE_OUTPUT_PUSHPULL_NOPULL : GPIO_MODE_OUTPUT_PUSHPULL_PULLUP;
 
         GPIO_initPin(&CurrentPin);
 
@@ -110,7 +110,7 @@ LED_State_t LED_getLedState(uint8_t LedID)
 {
     /* Parameters validation */
     assert_param(IS_LED_ID_VALID(LedID));
-        
+
     uint8_t PortID = LED_Configs[LedID].PortID;
     uint8_t PinNum = LED_Configs[LedID].PinNum;
     LED_ActiveType_t ActiveType = LED_Configs[LedID].ActiveType;
