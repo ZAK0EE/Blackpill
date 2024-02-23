@@ -2,6 +2,7 @@
 #include "MCAL/GPIO/GPIO.h"
 #include <stdio.h>
 #include "assertparam.h"
+#include "HAL/Led/Led.h"
 
 
 void assert_failed(uint8_t* file, uint32_t line)
@@ -12,31 +13,20 @@ void assert_failed(uint8_t* file, uint32_t line)
 
 int main()
 {
-    GPIO_PinConfigTypeDef Pin0 =
-    {
-        .PinMode = GPIO_MODE_OUTPUT_PUSHPULL_PULLDOWN,
-        .PinNumber = GPIO_PIN5,
-        .Port = GPIO_GPIOC,
-        .PinSpeed = GPIO_SPEED_MEDIUM,
-    };
-
-        GPIO_initPin(&Pin0);
-
-    RCC_enableAHB1Peripheral(RCC_AHB1PERIPHERAL_GPIOC);
-    for(int i = GPIO_PIN0; i <= GPIO_PIN15; i++)
-    {
-        Pin0.PinNumber = i;
-        GPIO_initPin(&Pin0);
-        GPIO_setPinValue(Pin0.Port, i, GPIO_PINSTATE_SET);
 
 
-    }
+    RCC_enableAHB1Peripheral(RCC_AHB1PERIPHERAL_GPIOA);
+    LED_Init();
 
-
+    volatile int x;
       while (1)
     {
-        GPIO_setPinValue(GPIO_GPIOA, GPIO_PIN0, GPIO_PINSTATE_SET);
+        LED_setLedState(0, LED_ON);
+        LED_setLedState(0, LED_OFF);
 
-        GPIO_setPinValue(GPIO_GPIOA, GPIO_PIN0, GPIO_PINSTATE_RESET);
-    }  return 0;
+        LED_setLedState(1, LED_ON);
+        LED_setLedState(1, LED_OFF);        
+
+    } 
+    return 0;
 }
