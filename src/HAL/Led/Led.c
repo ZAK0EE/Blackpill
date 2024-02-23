@@ -7,28 +7,82 @@
  * @copyright Copyright (c) 2024
  */
 
+/********************************************************************************************************/
+/************************************************Includes************************************************/
+/********************************************************************************************************/
 #include "LED.h"
 #include "Led_cfg.h"
 #include "MCAL/GPIO/GPIO.h"
+#include "assertparam.h"
 
+/********************************************************************************************************/
+/************************************************Defines*************************************************/
+/********************************************************************************************************/
+
+/**
+ * @brief Check if the LED ID is valid.
+ */
+#define IS_LED_ID_VALID(ID)    ((ID) < _NUM_OF_LEDS)
+
+/**
+ * @brief Check if the LED active type is valid.
+ */
+#define IS_LED_ACTIVE_TYPE(TYPE)    (((TYPE) == LED_ACTIVEHIGH) || ((TYPE) == LED_ACTIVELOW))
+
+/**
+ * @brief Check if the LED state is valid.
+ */
+#define IS_LED_STATE(STATE)    (((STATE) == LED_OFF) || ((STATE) == LED_ON))
+
+/********************************************************************************************************/
+/************************************************Types***************************************************/
+/********************************************************************************************************/
+
+
+
+/********************************************************************************************************/
+/************************************************Variables***********************************************/
+/********************************************************************************************************/
+
+
+
+/********************************************************************************************************/
+/*****************************************Static Functions Prototype*************************************/
+/********************************************************************************************************/
+
+
+
+/********************************************************************************************************/
+/*********************************************APIs Implementation****************************************/
+/********************************************************************************************************/
 
 LED_Error_t LED_Init(void)
 {
     LED_Error_t RetErrorStatus = LED_OK;
 
     /* Initialize each LED based on the configuration */
-    GPIO_PinConfigTypeDef CurrentLed;
+    GPIO_PinConfigTypeDef CurrentPin;
     for (uint32_t LedCounter = 0; LedCounter < (uint32_t) _NUM_OF_LEDS; LedCounter++)
     {
         LED_Config_t *CurrentLedConfig = &LED_Configs[LedCounter];
+        
+        /* Parameters validation */
+        assert_param(IS_LED_ACTIVE_TYPE(CurrentLedConfig->ActiveType));
+        assert_param(IS_LED_STATE(CurrentLedConfig->LedInitState));
 
-        CurrentLed.Port = (GPIO_PortTypeDef)CurrentLedConfig->PortID;
-        CurrentLed.PinNumber = (GPIO_PinTypeDef)CurrentLedConfig->PinNum;
-        CurrentLed.PinSpeed = GPIO_SPEED_MEDIUM;
-        CurrentLed.PinMode = (CurrentLedConfig->ActiveType == LED_ACTIVEHIGH ) ?
+        /* Each pin initialization */
+        CurrentPin.Port = (GPIO_PortTypeDef)CurrentLedConfig->PortID;
+        CurrentPin.PinNumber = (GPIO_PinTypeDef)CurrentLedConfig->PinNum;
+        CurrentPin.PinSpeed = GPIO_SPEED_MEDIUM;
+        CurrentPin.PinMode = (CurrentLedConfig->ActiveType == LED_ACTIVEHIGH ) ?
                              GPIO_MODE_OUTPUT_PUSHPULL_PULLDOWN : GPIO_MODE_OUTPUT_PUSHPULL_PULLUP;
 
-        GPIO_initPin(&CurrentLed);
+        GPIO_initPin(&CurrentPin);
+
+        /* Determine Pin is high or low based on the active type of the LED*/
+        GPIO_PinStateTypeDef PinState = (GPIO_PinStateTypeDef)(CurrentLedConfig->LedInitState ^ (LED_State_t)CurrentLedConfig->ActiveType);
+
+        GPIO_setPinValue(CurrentPin.Port, CurrentPin.PinNumber, PinState);
     }
 
     return RetErrorStatus;
@@ -36,6 +90,11 @@ LED_Error_t LED_Init(void)
 
 LED_Error_t LED_setLedState(uint8_t LedID, LED_State_t LedState)
 {
+    /* Parameters validation */
+    assert_param(IS_LED_ID_VALID(LedID));
+    assert_param(IS_LED_STATE(LedState));
+
+
     uint8_t PortID = LED_Configs[LedID].PortID;
     uint8_t PinNum = LED_Configs[LedID].PinNum;
     LED_ActiveType_t ActiveType = LED_Configs[LedID].ActiveType;
@@ -49,6 +108,9 @@ LED_Error_t LED_setLedState(uint8_t LedID, LED_State_t LedState)
 
 LED_State_t LED_getLedState(uint8_t LedID)
 {
+    /* Parameters validation */
+    assert_param(IS_LED_ID_VALID(LedID));
+        
     uint8_t PortID = LED_Configs[LedID].PortID;
     uint8_t PinNum = LED_Configs[LedID].PinNum;
     LED_ActiveType_t ActiveType = LED_Configs[LedID].ActiveType;
