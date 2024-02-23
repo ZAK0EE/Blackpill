@@ -42,8 +42,8 @@ typedef enum {
 
 /* Enumeration for Switch states (pressed/released) */
 typedef enum {
+    SWITCH_RELEASED,  /**< Switch is released */
     SWITCH_PRESSED,   /**< Switch is pressed */
-    SWITCH_RELEASED   /**< Switch is released */
 } Switch_StateType_t;
 
 typedef enum {
