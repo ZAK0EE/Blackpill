@@ -125,12 +125,19 @@ typedef enum
 } GPIO_PinSpeedTypeDef;
 
 
+/**
+ * @brief Enumeration defining GPIO pin states.
+ *
+ * This enumeration provides constants for GPIO pin states: RESET and SET.
+ * - GPIO_PINSTATE_RESET: Represents the logic low state or deactivation.
+ * - GPIO_PINSTATE_SET: Represents the logic high state or activation.
+ */
 typedef enum 
 {
-    GPIO_PINSTATE_RESET,
-    GPIO_PINSTATE_SET
-}
-GPIO_PinStateTypeDef;
+    GPIO_PINSTATE_RESET, /**< Logic low state or deactivation. */
+    GPIO_PINSTATE_SET    /**< Logic high state or activation. */
+} GPIO_PinStateTypeDef;
+
 
 
 /***************************************************/
