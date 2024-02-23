@@ -19,6 +19,10 @@
 /********************************************************************************************************/
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
+/**
+ * @brief Validate Switch ID.
+ */
+#define IS_SWITCH_ID(switchID) ((switchID) < _NUM_OF_SWITCHES)
 
 /**
  * @brief Validate Switch_InternalPullupConfig_t enum values.
@@ -65,6 +69,8 @@ Switch_Error_t Switch_init(void)
 
 Switch_StateType_t Switch_getSwitchState(uint32_t SwitchID)
 {
+    assert_param(IS_SWITCH_ID(SwitchID));
+    
 	GPIO_PortTypeDef	PortID		= (GPIO_PortTypeDef)Switch_Configs[SwitchID].PortID;
 	GPIO_PinTypeDef		PinNum		= (GPIO_PinTypeDef)Switch_Configs[SwitchID].PinNum;
 	Switch_ActiveType_t	ActiveType	= Switch_Configs[SwitchID].ActiveType;
