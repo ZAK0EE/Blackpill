@@ -1,7 +1,7 @@
 /**
  * @file Led_cfg.c
  * @author Ziad Gamalelden (ziad.gamalelden@gmail.com)
- * @brief 
+ * @brief Source file for Leds configuration (Edit it to your own need)
  * @version 0.1
  * @date 2024-02-23
  * 

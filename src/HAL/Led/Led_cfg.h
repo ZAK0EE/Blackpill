@@ -1,7 +1,7 @@
 /**
  * @file Led_cfg.h
  * @author Ziad Gamalelden (ziad.gamalelden@gmail.com)
- * @brief 
+ * @brief header file for Leds configuration (Edit it to your own need)
  * @version 0.1
  * @date 2024-02-23
  * 
@@ -20,6 +20,13 @@
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
 
+/**
+ * @brief Enumeration representing the LEDs indexes in the configuration.
+ *
+ * This enumeration provides constants for each LED, including a special value '_NUM_OF_LEDS'
+ * representing the total number of LEDs. 
+ * @note It is important not to add values after '_NUM_OF_LEDS' and not to remove '_NUM_OF_LEDS', as it is used for boundary checks.
+ */
 typedef enum
 {
     LED_RED,
