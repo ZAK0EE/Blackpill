@@ -80,7 +80,7 @@ typedef struct
  * 
  * @param NVIC_IRQ The NVIC_IRQ_t representing the interrupt for which the pending status should be cleared.
  */
-void clearPendingIRQ(NVIC_IRQ_t NVIC_IRQ)
+static void clearPendingIRQ(NVIC_IRQ_t NVIC_IRQ)
 {
     NVIC->ICPR[NVIC_IRQ / 32] = (1UL << (NVIC_IRQ % 32));
 }
