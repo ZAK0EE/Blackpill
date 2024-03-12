@@ -151,3 +151,10 @@ NVIC_IsActive_t NVIC_getActiveStatus(NVIC_IRQ_t NVIC_IRQ)
 
 }
 
+MCAL_StatusTypeDef NVIC_generateSWInterrupt(NVIC_IRQ_t NVIC_IRQ)
+{
+    assert_param(IS_VALID_NVIC_IRQ(NVIC_IRQ));
+
+    NVIC->STIR = NVIC_IRQ;
+  
+}

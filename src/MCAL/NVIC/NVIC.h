@@ -162,6 +162,17 @@ NVIC_IsPending_t NVIC_getPendingIRQ(NVIC_IRQ_t NVIC_IRQ);
  */
 NVIC_IsActive_t NVIC_getActiveStatus(NVIC_IRQ_t NVIC_IRQ);
 
+/**
+ * @brief Generate a software interrupt for the specified NVIC_IRQ.
+ *
+ * This function generates a software interrupt for the specified Nested Vectored Interrupt Controller (NVIC) interrupt.
+ *
+ * @param NVIC_IRQ The NVIC_IRQ_t representing the interrupt for which a software interrupt should be generated.
+ * @return MCAL_StatusTypeDef indicating the status of the operation
+ *
+ * @note When the USERSETMPEND bit in the SCR is set to 1, unprivileged access to this function is allowed
+ */
+MCAL_StatusTypeDef NVIC_generateSWInterrupt(NVIC_IRQ_t NVIC_IRQ);
 
 
 
