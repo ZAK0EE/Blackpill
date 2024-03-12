@@ -126,6 +126,7 @@ MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef *PinConfig)
 {
     GPIO_TypeDef volatile *const GPIO = GPIOS[PinConfig->Port];
 
+    assert_param(PinConfig);
     assert_param(IS_GPIO_PORT(PinConfig->Port));
     assert_param(IS_GPIO_PIN(PinConfig->PinNumber));
     assert_param(IS_GPIO_SPEED(PinConfig->PinSpeed));
