@@ -52,7 +52,7 @@ typedef enum {
     NVIC_IRQ_DMA1_STREAM5,              /* DMA1 Stream5 global interrupt */
     NVIC_IRQ_DMA1_STREAM6,              /* DMA1 Stream6 global interrupt */
     NVIC_IRQ_ADC1,                      /* ADC1 global interrupts */
-    NVIC_IRQ_EXTI9_5,                   /* EXTI Line[9:5] interrupts */
+    NVIC_IRQ_EXTI9_5 = 23,              /* EXTI Line[9:5] interrupts */
     NVIC_IRQ_TIM1_BRK_TIM9,             /* TIM1 Break interrupt and TIM9 global interrupt */
     NVIC_IRQ_TIM1_UP_TIM10,             /* TIM1 Update interrupt and TIM10 global interrupt */
     NVIC_IRQ_TIM1_TRG_COM_TIM11,        /* TIM1 Trigger and Commutation interrupts and TIM11 global interrupt */
@@ -68,27 +68,27 @@ typedef enum {
     NVIC_IRQ_SPI2,                      /* SPI2 global interrupt */
     NVIC_IRQ_USART1,                    /* USART1 global interrupt */
     NVIC_IRQ_USART2,                    /* USART2 global interrupt */
-    NVIC_IRQ_EXTI15_10,                 /* EXTI Line[15:10] interrupts */
+    NVIC_IRQ_EXTI15_10 = 40,            /* EXTI Line[15:10] interrupts */
     NVIC_IRQ_EXTI17_RTC_ALARM,          /* EXTI Line 17 interrupt / RTC Alarms (A and B) through EXTI line interrupt */
     NVIC_IRQ_EXTI18_OTG_FS_WKUP,        /* EXTI Line 18 interrupt / USB On-The-Go FS Wakeup through EXTI line interrupt */
-    NVIC_IRQ_DMA1_STREAM7,              /* DMA1 Stream7 global interrupt */
+    NVIC_IRQ_DMA1_STREAM7 = 47,         /* DMA1 Stream7 global interrupt */
     NVIC_IRQ_SDIO,                      /* SDIO global interrupt */
     NVIC_IRQ_TIM5,                      /* TIM5 global interrupt */
     NVIC_IRQ_SPI3,                      /* SPI3 global interrupt */
-    NVIC_IRQ_DMA2_STREAM0,              /* DMA2 Stream0 global interrupt */
+    NVIC_IRQ_DMA2_STREAM0 = 56,         /* DMA2 Stream0 global interrupt */
     NVIC_IRQ_DMA2_STREAM1,              /* DMA2 Stream1 global interrupt */
     NVIC_IRQ_DMA2_STREAM2,              /* DMA2 Stream2 global interrupt */
     NVIC_IRQ_DMA2_STREAM3,              /* DMA2 Stream3 global interrupt */
     NVIC_IRQ_DMA2_STREAM4,              /* DMA2 Stream4 global interrupt */
-    NVIC_IRQ_OTG_FS,                    /* USB On The Go FS global interrupt */
+    NVIC_IRQ_OTG_FS = 67,               /* USB On The Go FS global interrupt */
     NVIC_IRQ_DMA2_STREAM5,              /* DMA2 Stream5 global interrupt */
     NVIC_IRQ_DMA2_STREAM6,              /* DMA2 Stream6 global interrupt */
     NVIC_IRQ_DMA2_STREAM7,              /* DMA2 Stream7 global interrupt */
     NVIC_IRQ_USART6,                    /* USART6 global interrupt */
     NVIC_IRQ_I2C3_EV,                   /* I2C3 event interrupt */
     NVIC_IRQ_I2C3_ER,                   /* I2C3 error interrupt */
-    NVIC_IRQ_FPU,                       /* FPU global interrupt */
-    NVIC_IRQ_SPI4,                      /* SPI4 global interrupt */
+    NVIC_IRQ_FPU = 81,                  /* FPU global interrupt */
+    NVIC_IRQ_SPI4 = 84,                 /* SPI4 global interrupt */
 } NVIC_IRQ_t;
 
 /**
