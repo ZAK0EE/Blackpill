@@ -219,13 +219,14 @@ MCAL_StatusTypeDef NVIC_SetPriority(NVIC_IRQ_t IRQ, NVIC_PG_t PriorityGrouping, 
     assert_param(IS_VALID_NVIC_IRQ(IRQ));
     assert_param(IS_VALID_NVIC_PG(PriorityGrouping));
 
-    uint8_t SubGroupEndBit = ((PriorityGrouping & (0x7 << 8)) >> 8);
+    uint8_t SubGroupEndBit = ((PriorityGrouping & (0x7UL << 8)) >> 8);
 
-    uint8_t SubGroupMask = ((uint8_t)~0 >> (8 - SubGroupEndBit - 1));
+    uint8_t SubGroupMask = ~0;
+    SubGroupMask >>=  (8U - SubGroupEndBit - 1U);
 
     uint8_t SubGroupMasked = (SubGroup << 4) & SubGroupMask;
 
-    uint8_t PreemptionMasked = (Preemption<< 4) & ~SubGroupMask;
+    uint8_t PreemptionMasked = (Preemption<< 4) & (uint8_t)~SubGroupMask;
 
     uint8_t Priority = PreemptionMasked | SubGroupMasked;
 
