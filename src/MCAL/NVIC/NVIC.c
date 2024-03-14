@@ -12,10 +12,11 @@
 /***************Registers************/
 /************************************/
 #define NVIC_BASE (0xE000E100UL)
+#define SCB_BASE     (0xE000ED00UL)
 
 
-#define NVIC ((NVIC_t volatile* const)(NVIC_BASE))
-
+#define NVIC    ((NVIC_t volatile* const)(NVIC_BASE))
+#define SCB     ((SCB_t volatile* const)(SCB_BASE))
 /************************************/
 /***************Validators***********/
 /************************************/
@@ -27,6 +28,23 @@
  * @param IRQ NVIC interrupt to be validated.
  */
 #define IS_VALID_NVIC_IRQ(IRQ) (((IRQ) >= NVIC_IRQ_WWDG) && ((IRQ) <= NVIC_IRQ_SPI4))
+
+/**
+ * @brief Macro to validate NVIC priority grouping options.
+ *
+ * This macro checks if the provided NVIC priority grouping option is valid.
+ * It verifies if the option matches one of the defined options in the NVIC_PG_t enumeration.
+ *
+ * @param pg The NVIC priority grouping option to validate.
+ *
+ */
+#define IS_VALID_NVIC_PG(pg) \
+    (((pg) == NVIC_PG_16GROUPS_0SUBGROUPS) || \
+     ((pg) == NVIC_PG_8GROUPS_2SUBGROUPS) || \
+     ((pg) == NVIC_PG_4GROUPS_4SUBGROUPS) || \
+     ((pg) == NVIC_PG_2GROUPS_8SUBGROUPS) || \
+     ((pg) == NVIC_PG_0GROUPS_16SUBGROUPS))
+
 
 
 /********************************************************************************************************/
@@ -61,6 +79,31 @@ typedef struct
     uint32_t RESERVED5[580];    /**< Reserved space */
     uint32_t STIR;              /**< Software Trigger Interrupt Register */
 } NVIC_t;
+
+/**
+ * @brief Structure representing System Control Block (SCB) registers.
+ *
+ * This structure defines the layout of the System Control Block (SCB) registers,
+ * which include various control and status registers related to the Cortex-M processor.
+ */
+typedef struct 
+{
+    uint32_t CPUID;  /**< CPUID Register */
+    uint32_t ICSR;   /**< Interrupt Control and State Register (ICSR) */
+    uint32_t VTOR;   /**< Vector Table Offset Register (VTOR) */
+    uint32_t AIRCR;  /**< Application Interrupt and Reset Control Register (AIRCR) */
+    uint32_t SCR;    /**< System Control Register (SCR) */
+    uint32_t CCR;    /**< Configuration and Control Register (CCR) */
+    uint32_t SHPR1;  /**< System Handler Priority Register 1 (SHPR1) */
+    uint32_t SHPR2;  /**< System Handler Priority Register 2 (SHPR2) */
+    uint32_t SHPR3;  /**< System Handler Priority Register 3 (SHPR3) */
+    uint32_t SHCSR;  /**< System Handler Control and State Register (SHCSR) */
+    uint32_t CFSR;   /**< Configurable Fault Status Register (CFSR) */
+    uint32_t HFSR;   /**< HardFault Status Register (HFSR) */
+    uint32_t MMAR;   /**< Memory Management Fault Address Register (MMAR) */
+    uint32_t BFAR;   /**< Bus Fault Address Register (BFAR) */
+    uint32_t AFSR;   /**< Auxiliary Fault Status Register (AFSR) */
+} SCB_t;
 
 
 /********************************************************************************************************/
@@ -156,5 +199,37 @@ MCAL_StatusTypeDef NVIC_generateSWInterrupt(NVIC_IRQ_t NVIC_IRQ)
     assert_param(IS_VALID_NVIC_IRQ(NVIC_IRQ));
 
     NVIC->STIR = NVIC_IRQ;
+
+    return MCAL_OK;
   
+}
+
+MCAL_StatusTypeDef NVIC_setPriorityGrouping(NVIC_PG_t PriorityGrouping)
+{
+    assert_param(IS_VALID_NVIC_PG(PriorityGrouping));
+
+    /* Clearing the VECTKEYSTAT/VECTKEY bits as the read value is different than the write*/
+    SCB->AIRCR = (SCB->AIRCR & ~(0xFFFFUL << 16)) | PriorityGrouping;
+
+    return MCAL_OK;
+}
+
+MCAL_StatusTypeDef NVIC_SetPriority(NVIC_IRQ_t IRQ, NVIC_PG_t PriorityGrouping, uint8_t Preemption, uint8_t SubGroup)
+{
+    assert_param(IS_VALID_NVIC_IRQ(IRQ));
+    assert_param(IS_VALID_NVIC_PG(PriorityGrouping));
+
+    uint8_t SubGroupEndBit = ((PriorityGrouping & (0x7 << 8)) >> 8);
+
+    uint8_t SubGroupMask = ((uint8_t)~0 >> (8 - SubGroupEndBit - 1));
+
+    uint8_t SubGroupMasked = (SubGroup << 4) & SubGroupMask;
+
+    uint8_t PreemptionMasked = (Preemption<< 4) & ~SubGroupMask;
+
+    uint8_t Priority = PreemptionMasked | SubGroupMasked;
+
+    NVIC->IPR[IRQ]=Priority;
+
+
 }

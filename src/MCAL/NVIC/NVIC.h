@@ -91,6 +91,32 @@ typedef enum {
     NVIC_IRQ_SPI4 = 84,                 /* SPI4 global interrupt */
 } NVIC_IRQ_t;
 
+
+/**
+ * @brief Enumeration for NVIC priority grouping options.
+ *
+ * This enumeration provides options for configuring the priority grouping in the Nested Vectored Interrupt Controller (NVIC).
+ * The priority grouping affects the distribution of priority bits between preemption and subpriority levels.
+ * It can be configured to have different numbers of priority groups and subpriority bits.
+ *
+ * The values in this enumeration represent different priority grouping options:
+ * - NVIC_PG_16GROUPS_0SUBGROUPS: 16 priority groups, 0 subpriority bits.
+ * - NVIC_PG_8GROUPS_2SUBGROUPS: 8 priority groups, 2 subpriority bits.
+ * - NVIC_PG_4GROUPS_4SUBGROUPS: 4 priority groups, 4 subpriority bits.
+ * - NVIC_PG_2GROUPS_8SUBGROUPS: 2 priority groups, 8 subpriority bits.
+ * - NVIC_PG_0GROUPS_16SUBGROUPS: 0 priority groups, 16 subpriority bits.
+ *
+ * These options are used to configure the NVIC priority grouping via the NVIC_SetPriorityGrouping() function.
+ */
+typedef enum
+{
+    NVIC_PG_16GROUPS_0SUBGROUPS  = (0x05FA0000UL), /**< 16 priority groups, 0 subpriority bits. */
+    NVIC_PG_8GROUPS_2SUBGROUPS   = (0x05FA0400UL), /**< 8 priority groups, 2 subpriority bits. */
+    NVIC_PG_4GROUPS_4SUBGROUPS   = (0x05FA0500UL), /**< 4 priority groups, 4 subpriority bits. */
+    NVIC_PG_2GROUPS_8SUBGROUPS   = (0x05FA0600UL), /**< 2 priority groups, 8 subpriority bits. */
+    NVIC_PG_0GROUPS_16SUBGROUPS  = (0x05FA0700UL)  /**< 0 priority groups, 16 subpriority bits. */
+} NVIC_PG_t;
+
 /**
  * @brief Enumeration for NVIC Pending Status.
  * 
@@ -173,6 +199,40 @@ NVIC_IsActive_t NVIC_getActiveStatus(NVIC_IRQ_t NVIC_IRQ);
  * @note When the USERSETMPEND bit in the SCR is set to 1, unprivileged access to this function is allowed
  */
 MCAL_StatusTypeDef NVIC_generateSWInterrupt(NVIC_IRQ_t NVIC_IRQ);
+
+/**
+ * @brief Set the priority grouping for the Nested Vectored Interrupt Controller (NVIC).
+ *
+ * This function sets the priority grouping in the NVIC according to the specified priority grouping option.
+ * The priority grouping affects the distribution of priority bits between preemption and subpriority levels.
+ * Different priority groupings may be suitable for different system configurations and interrupt handling requirements.
+ *
+ * @param PriorityGrouping The priority grouping option to be set for the NVIC.
+ *                         
+ *
+ * @return MCAL_StatusTypeDef Status of the operation, indicating success or failure.
+ */
+MCAL_StatusTypeDef NVIC_setPriorityGrouping(NVIC_PG_t PriorityGrouping);
+
+
+/**
+ * @brief Set the priority of a specific interrupt in the Nested Vectored Interrupt Controller (NVIC).
+ *
+ * This function sets the priority of the specified interrupt in the NVIC, using the provided preemption and subpriority levels.
+ * The priority values are based on the configured priority grouping.
+ *
+ * @param IRQ            The NVIC IRQ for which the priority is to be set.
+ *
+ * @param PriorityGrouping  The priority grouping option used to interpret the preemption and subpriority levels.
+ *                          This should be one of the options defined in the NVIC_PG_t enumeration.
+ * @param Preemption     The preemption priority level to be assigned to the interrupt.
+ * @param SubGroup       The subpriority level to be assigned to the interrupt.
+ *
+ * @return MCAL_StatusTypeDef Status of the operation, indicating success or failure.
+ */
+MCAL_StatusTypeDef NVIC_SetPriority(NVIC_IRQ_t IRQ, NVIC_PG_t PriorityGrouping, uint8_t Preemption, uint8_t SubGroup);
+
+
 
 
 
