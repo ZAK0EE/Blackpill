@@ -7,7 +7,8 @@
 /********************************************************************************************************/
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
-
+#define SCB_PRIGROUP_OFFSET (8UL)
+#define SCB_PRIGROUP_MASK (0x7UL << SCB_PRIGROUP_OFFSET)
 /************************************/
 /***************Registers************/
 /************************************/
@@ -220,10 +221,10 @@ MCAL_StatusTypeDef NVIC_SetPriority(NVIC_IRQ_t IRQ, NVIC_PG_t PriorityGrouping, 
     assert_param(IS_VALID_NVIC_IRQ(IRQ));
     assert_param(IS_VALID_NVIC_PG(PriorityGrouping));
 
-    uint8_t SubGroupEndBit = ((PriorityGrouping & (0x7UL << 8)) >> 8);
+    uint8_t SubGroupEndBit = ((PriorityGrouping & SCB_PRIGROUP_MASK) >> SCB_PRIGROUP_OFFSET);
 
-    uint8_t SubGroupMask = ~0;
-    SubGroupMask >>=  (8U - SubGroupEndBit - 1U);
+    /* Create a mask covers bits from 0 to SubGroupEndBit*/
+    uint8_t SubGroupMask = 0xFF >> (8U - SubGroupEndBit - 1U);
 
     uint8_t SubGroupMasked = (SubGroup << 4) & SubGroupMask;
 
