@@ -76,7 +76,7 @@ typedef struct
     uint32_t IABR[8];           /**< Interrupt Active Bit Registers (0-7) */
     uint32_t RESERVED4[56];     /**< Reserved space */
     uint8_t  IPR[240];          /**< Interrupt Priority Registers (0-59) - Byte Accessible */
-    uint32_t RESERVED5[580];    /**< Reserved space */
+    uint32_t RESERVED5[644];    /**< Reserved space */
     uint32_t STIR;              /**< Software Trigger Interrupt Register */
 } NVIC_t;
 
@@ -88,21 +88,22 @@ typedef struct
  */
 typedef struct 
 {
-    uint32_t CPUID;  /**< CPUID Register */
-    uint32_t ICSR;   /**< Interrupt Control and State Register (ICSR) */
-    uint32_t VTOR;   /**< Vector Table Offset Register (VTOR) */
-    uint32_t AIRCR;  /**< Application Interrupt and Reset Control Register (AIRCR) */
-    uint32_t SCR;    /**< System Control Register (SCR) */
-    uint32_t CCR;    /**< Configuration and Control Register (CCR) */
-    uint32_t SHPR1;  /**< System Handler Priority Register 1 (SHPR1) */
-    uint32_t SHPR2;  /**< System Handler Priority Register 2 (SHPR2) */
-    uint32_t SHPR3;  /**< System Handler Priority Register 3 (SHPR3) */
-    uint32_t SHCSR;  /**< System Handler Control and State Register (SHCSR) */
-    uint32_t CFSR;   /**< Configurable Fault Status Register (CFSR) */
-    uint32_t HFSR;   /**< HardFault Status Register (HFSR) */
-    uint32_t MMAR;   /**< Memory Management Fault Address Register (MMAR) */
-    uint32_t BFAR;   /**< Bus Fault Address Register (BFAR) */
-    uint32_t AFSR;   /**< Auxiliary Fault Status Register (AFSR) */
+    uint32_t ACTLR;           /**< Auxiliary Control Register. */
+    uint32_t Reserved1[829];  /**< Reserved space. */
+    uint32_t CPUID;           /**< CPUID Base Register. */
+    uint32_t ICSR;            /**< Interrupt Control and State Register. */
+    uint32_t VTOR;            /**< Vector Table Offset Register. */
+    uint32_t AIRCR;           /**< Application Interrupt and Reset Control Register. */
+    uint32_t SCR;             /**< System Control Register. */
+    uint32_t CCR;             /**< Configuration and Control Register. */
+    uint8_t SHPR[12];         /**< System Handler Priority Registers (0-11). */
+    uint32_t SHCSR;           /**< System Handler Control and State Register. */
+    uint32_t CFSR;            /**< Configurable Fault Status Register. */
+    uint32_t HFSR;            /**< Hard Fault Status Register. */
+    uint32_t Reserved2;       /**< Reserved space. */
+    uint32_t MMAR;            /**< MemManage Fault Address Register. */
+    uint32_t BFAR;            /**< BusFault Address Register. */
+    uint32_t AFSR;            /**< Auxiliary Fault Status Register. */
 } SCB_t;
 
 
@@ -233,4 +234,5 @@ MCAL_StatusTypeDef NVIC_SetPriority(NVIC_IRQ_t IRQ, NVIC_PG_t PriorityGrouping, 
     NVIC->IPR[IRQ]=Priority;
 
 
+    return MCAL_OK;
 }

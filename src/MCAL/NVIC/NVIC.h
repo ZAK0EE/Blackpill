@@ -122,9 +122,10 @@ typedef enum
  * 
  * The enumerators represent the NVIC pending status.
  */
-typedef enum {
-    NVIC_PENDING,    /**< NVIC interrupt is pending */
-    NVIC_N_PENDING   /**< NVIC interrupt is not pending */
+typedef enum 
+{
+    NVIC_N_PENDING,   /**< NVIC interrupt is not pending */
+    NVIC_PENDING,    /**< NVIC interrupt is pending */    
 } NVIC_IsPending_t;
 
 /**
@@ -132,9 +133,10 @@ typedef enum {
  * 
  * The enumerators represent the NVIC active status.
  */
-typedef enum {
+typedef enum 
+{
+    NVIC_N_ACTIVE,   /**< NVIC interrupt is not active */
     NVIC_ACTIVE,    /**< NVIC interrupt is active */
-    NVIC_N_ACTIVE   /**< NVIC interrupt is not active */
 } NVIC_IsActive_t;
 /********************************************************************************************************/
 /************************************************APIs****************************************************/
@@ -224,7 +226,7 @@ MCAL_StatusTypeDef NVIC_setPriorityGrouping(NVIC_PG_t PriorityGrouping);
  * @param IRQ            The NVIC IRQ for which the priority is to be set.
  *
  * @param PriorityGrouping  The priority grouping option used to interpret the preemption and subpriority levels.
- *                          This should be one of the options defined in the NVIC_PG_t enumeration.
+ *                          
  * @param Preemption     The preemption priority level to be assigned to the interrupt.
  * @param SubGroup       The subpriority level to be assigned to the interrupt.
  *
