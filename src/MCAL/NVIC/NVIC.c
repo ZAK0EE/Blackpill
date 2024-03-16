@@ -224,8 +224,8 @@ MCAL_StatusTypeDef NVIC_SetPriority(NVIC_IRQ_t IRQ, NVIC_PG_t PriorityGrouping, 
     uint8_t SubGroupEndBit = ((PriorityGrouping & SCB_PRIGROUP_MASK) >> SCB_PRIGROUP_OFFSET);
 
     /* Create a mask covers bits from 0 to SubGroupEndBit*/
-    uint8_t SubGroupMask = 0xFF >> (8U - SubGroupEndBit - 1U);
-
+    //uint8_t SubGroupMask = 0xFF >> (8U - SubGroupEndBit - 1U);
+    uint8_t SubGroupMask = (1 << (SubGroupEndBit + 1)) - 1;
     uint8_t SubGroupMasked = (SubGroup << 4) & SubGroupMask;
 
     uint8_t PreemptionMasked = (Preemption<< 4) & (uint8_t)~SubGroupMask;
