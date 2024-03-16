@@ -110,10 +110,9 @@ void SysTick_startTimerMS(uint32_t timeMS)
 {
 
     stopSysTick();
-    
-    uint64_t freq=  (SYSTICK->CTRL & SYSTICK_CTRL_CLKSOURCE_MASK) ? SYSTICK_AHB_CLK : SYSTICK_AHB_CLK / 8;
 
-    SYSTICK->LOAD =((freq / 1000) * timeMS) - 1;
+    uint64_t freq = (SYSTICK->CTRL & SYSTICK_CTRL_CLKSOURCE_MASK) ? SYSTICK_AHB_CLK : SYSTICK_AHB_CLK / 8;
+    SYSTICK->LOAD = ((freq / 1000) * (timeMS)) - 1;
     SYSTICK->CTRL |= SYSTICK_CTRL_ENABLE_MASK;
 }
 void SysTick_startTickCounter(uint32_t ticks)
