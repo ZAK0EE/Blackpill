@@ -18,6 +18,7 @@
 
 #define NVIC    ((NVIC_t volatile* const)(NVIC_BASE))
 #define SCB     ((SCB_t volatile* const)(SCB_BASE))
+
 /************************************/
 /***************Validators***********/
 /************************************/
