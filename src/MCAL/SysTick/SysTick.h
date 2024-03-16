@@ -20,16 +20,16 @@
  * @brief Enumeration for SysTick clock sources.
  */
 typedef enum {
-    SYSTICK_CLK_AHB_DIV_8,   /**< SysTick clock source: AHB divided by 8 */
-    SYSTICK_CLK_AHB          /**< SysTick clock source: AHB */
+    SYSTICK_CLK_AHB_DIV_8 = (1UL << 2),   /**< SysTick clock source: AHB divided by 8 */
+    SYSTICK_CLK_AHB       = (0UL << 2),   /**< SysTick clock source: AHB */
 } SysTick_ClockSource_t;
 
 /**
  * @brief Enumeration for SysTick exception states.
  */
 typedef enum {
-    SYSTICK_EXCEPTION_ENABLED,    /**< SysTick exception is enabled */
-    SYSTICK_EXCEPTION_DISABLED    /**< SysTick exception is disabled */
+    SYSTICK_EXCEPTION_DISABLED = (0UL << 1),    /**< SysTick exception is disabled */
+    SYSTICK_EXCEPTION_ENABLED  = (1UL << 1),    /**< SysTick exception is enabled */
 } SysTick_ExceptionState_t;
 
 /**
@@ -71,6 +71,20 @@ void SysTick_startTimerMS(uint32_t timeMS);
  * activated when counting from 1 to 0.
  */
 void SysTick_startTickCounter(uint32_t ticks);
+
+/**
+ * @brief Retrieves the current value of the SysTick counter.
+ *
+ * @return The current value of the SysTick counter.
+ */
+uint32_t SysTick_currentTick(void);
+
+/**
+ * @brief Stops the SysTick timer.
+ *
+ */
+void SysTick_stop(void);
+
 
 
 
