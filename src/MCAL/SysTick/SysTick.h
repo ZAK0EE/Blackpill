@@ -16,6 +16,8 @@
 /************************************************Types***************************************************/
 /********************************************************************************************************/
 
+typedef void (*SysTick_CallBackFn_t)(void);
+
 /**
  * @brief Enumeration for SysTick clock sources.
  */
@@ -38,6 +40,7 @@ typedef enum {
 typedef struct {
     SysTick_ClockSource_t ClockSource;          /**< SysTick clock source */
     SysTick_ExceptionState_t ExceptionState;    /**< SysTick exception state */
+    SysTick_CallBackFn_t CallbackFunction;
 } SysTick_Config_t;
 
 

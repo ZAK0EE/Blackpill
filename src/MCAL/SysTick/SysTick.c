@@ -4,7 +4,7 @@
 
 #include "SysTick.h"
 #include "assertparam.h"
-
+#include <stddef.h>
 /********************************************************************************************************/
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
@@ -77,12 +77,17 @@ typedef struct
 /********************************************************************************************************/
 /************************************************Variables***********************************************/
 /********************************************************************************************************/
-
+static SysTick_CallBackFn_t callBackFunction = NULL;
 
 
 /********************************************************************************************************/
 /*****************************************Static Functions Prototype*************************************/
 /********************************************************************************************************/
+
+
+/**
+ * @brief A functions that stops the SysTick timer
+ */
 static void stopSysTick()
 {
     SYSTICK->CTRL &= ~(SYSTICK_CTRL_ENABLE_MASK);
@@ -103,7 +108,8 @@ void SysTick_init(SysTick_Config_t config)
     CTRL = (CTRL & SYSTICK_CTRL_TICKINT_MASK) | config.ExceptionState;
 
     SYSTICK->CTRL = CTRL;
-    
+
+    callBackFunction = config.CallbackFunction;
 }
 
 void SysTick_startTimerMS(uint32_t timeMS)
@@ -133,4 +139,12 @@ uint32_t SysTick_currentTick(void)
 void SysTick_stop(void)
 {
     stopSysTick();
+}
+
+void SysTick_Handler(void)
+{
+    assert_param(callBackFunction);
+
+    callBackFunction();
+
 }
