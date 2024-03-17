@@ -55,7 +55,7 @@ typedef struct {
  * 
  * @param config Configuration for SysTick initialization.
  */
-void SysTick_init(SysTick_Config_t config);
+void SysTick_init(SysTick_Config_t const *config);
 
 /**
  * @brief Starts the SysTick timer with a specified duration in milliseconds.

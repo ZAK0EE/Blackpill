@@ -13,7 +13,7 @@
 /***************Registers************/
 /************************************/
 
-#define SYSTICK_BASE     (0xE000E010)
+#define SYSTICK_BASE     (0xE000E010UL)
 
 #define SYSTICK    ((SysTick_t volatile* const)(SYSTICK_BASE))
 
@@ -98,18 +98,18 @@ static void stopSysTick()
 /*********************************************APIs Implementation****************************************/
 /********************************************************************************************************/
 
-void SysTick_init(SysTick_Config_t config)
+void SysTick_init(SysTick_Config_t const *config)
 {
-    assert_param(config.ClockSource);
-    assert_param(config.ExceptionState);
+    assert_param(IS_VALID_SYSTICK_CLOCK_SOURCE(config->ClockSource));
+    assert_param(IS_VALID_SYSTICK_EXCEPTION_STATE(config->ExceptionState));
 
     uint32_t CTRL = SYSTICK->CTRL;
-    CTRL = (CTRL & SYSTICK_CTRL_CLKSOURCE_MASK) | config.ClockSource;
-    CTRL = (CTRL & SYSTICK_CTRL_TICKINT_MASK) | config.ExceptionState;
+    CTRL = (CTRL & SYSTICK_CTRL_CLKSOURCE_MASK) | config->ClockSource;
+    CTRL = (CTRL & SYSTICK_CTRL_TICKINT_MASK) | config->ExceptionState;
 
     SYSTICK->CTRL = CTRL;
 
-    callBackFunction = config.CallbackFunction;
+    callBackFunction = config->CallbackFunction;
 }
 
 void SysTick_startTimerMS(uint32_t timeMS)
@@ -119,11 +119,12 @@ void SysTick_startTimerMS(uint32_t timeMS)
 
     uint64_t freq = (SYSTICK->CTRL & SYSTICK_CTRL_CLKSOURCE_MASK) ? SYSTICK_AHB_CLK : SYSTICK_AHB_CLK / 8;
     SYSTICK->LOAD = ((freq / 1000) * (timeMS)) - 1;
+    SYSTICK->VAL = 0;
     SYSTICK->CTRL |= SYSTICK_CTRL_ENABLE_MASK;
 }
 void SysTick_startTickCounter(uint32_t ticks)
 {
-    assert(IS_VALID_TICK(ticks));
+    assert_param(IS_VALID_TICK(ticks));
 
     stopSysTick();
     SYSTICK->LOAD = ticks;
@@ -143,8 +144,8 @@ void SysTick_stop(void)
 
 void SysTick_Handler(void)
 {
-    assert_param(callBackFunction);
-
-    callBackFunction();
+    
+    if(callBackFunction != NULL )
+        callBackFunction();
 
 }
