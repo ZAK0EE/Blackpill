@@ -6,6 +6,7 @@
 #include "HAL/Led/Led_cfg.h"
 #include "HAL/Switch/Switch.h"
 #include "HAL/Switch/Switch_cfg.h"
+#include "Services/Scheduler/Scheduler.h"
 void assert_failed(uint8_t* file, uint32_t line)
 {
     volatile int x;
@@ -23,31 +24,47 @@ void EXTI0_IRQHandler()
 
 #include "MCAL/SysTick/SysTick.h"
 
-void ToggleLed1MS(void)
+void ToggleRedLed1MS(void)
 {
     static int tog = 1;
     if(tog)
           LED_setLedState(LED_RED, LED_ON);
     else
-            LED_setLedState(LED_RED, LED_OFF);
+          LED_setLedState(LED_RED, LED_OFF);
 
     tog ^= 1;
-    volatile int x;
-   // while(1){x++;}    
+   
+}
+void ToggleYellowLed1MS(void)
+{
+    static int tog = 1;
+    if(tog)
+          LED_setLedState(LED_YELLOW, LED_ON);
+    else
+          LED_setLedState(LED_YELLOW, LED_OFF);
+
+    tog ^= 1;
+   
+}
+void ToggleGreenLed1MS(void)
+{
+    static int tog = 1;
+    if(tog)
+          LED_setLedState(LED_GREEN, LED_ON);
+    else
+          LED_setLedState(LED_GREEN, LED_OFF);
+
+    tog ^= 1;
+   
 }
 int main()
 {
-     RCC_enableAHB1Peripheral(RCC_AHB1PERIPHERAL_GPIOA);
+    RCC_enableAHB1Peripheral(RCC_AHB1PERIPHERAL_GPIOA);
     LED_Init();
-      LED_setLedState(LED_RED, LED_ON);
-    SysTick_Config_t config = 
-    {
-        .CallbackFunction = ToggleLed1MS,
-        .ClockSource = SYSTICK_CLK_AHB,
-        .ExceptionState = SYSTICK_EXCEPTION_ENABLED,
-    };
-    SysTick_init(&config);
-    SysTick_startTimerMS(1000);
+    //LED_setLedState(LED_RED, LED_ON);
+    Sched_init();
+    Sched_start();
+
     
     while(1);
 
