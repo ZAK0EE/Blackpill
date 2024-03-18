@@ -20,7 +20,11 @@
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
 
+/**
+ * @brief Time interval for the scheduler tick in milliseconds.
+ */
 #define SCHED_TICK_TIMEMS 1
+
 
 
 /********************************************************************************************************/
@@ -28,11 +32,15 @@
 /********************************************************************************************************/
 
 
+/**
+ * @brief Structure to hold information about a scheduled runnable task.
+ */
 typedef struct
 {
-	Sched_Runnable_Config_t *Runnable;
-	uint32_t RemainingTimeMS;
-}RunnableInfo_t;
+    Sched_Runnable_Config_t *Runnable;  /**< Pointer to the configuration of the scheduled task */
+    uint32_t RemainingTimeMS;           /**< Remaining time until the task's next execution */
+} RunnableInfo_t;
+
 
 
 
@@ -40,20 +48,50 @@ typedef struct
 /********************************************************************************************************/
 /************************************************Variables***********************************************/
 /********************************************************************************************************/
+
+/**
+ * @brief Array containing the configurations of all registered runnables.
+ * 
+ * This array holds the configurations of all the runnables registered with the scheduler.
+ */
 extern Sched_Runnable_Config_t Sched_Runnables[_NUM_OF_RUNNABLES];
 
+/**
+ * @brief Variable to track the number of pending ticks.
+ * 
+ */
 static uint32_t PendingTicks = 0;
+
+/**
+ * @brief Array to store runtime information for each runnable task.
+ * 
+ */
 static RunnableInfo_t rinfo[_NUM_OF_RUNNABLES];
+
 
 
 /********************************************************************************************************/
 /*****************************************Static Functions Prototype*************************************/
 /********************************************************************************************************/
+
+/**
+ * @brief Callback function invoked by the SysTick timer interrupt.
+ * 
+ * This function is registered as the callback function for the SysTick timer interrupt.
+ * It increments the `PendingTicks` variable, indicating that a tick has occurred.
+ */
 static void TickCallBack(void)
 {
 	PendingTicks++;
 }
 
+/**
+ * @brief Scheduler function responsible for task execution.
+ * 
+ * This function iterates through all the registered runnables and executes
+ * the callback function associated with each runnable if the remaining time
+ * for the task has elapsed.
+ */
 static void Scheduler(void)
 {
 	uint32_t idx;
