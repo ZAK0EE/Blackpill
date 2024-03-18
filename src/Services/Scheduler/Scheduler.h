@@ -41,10 +41,10 @@ typedef void (*Sched_Runnable_Callback_t)(void);
  */
 typedef struct	
 {
-	uint32_t DelayMS;                   /**< Time until the task is first executed. */
-	uint32_t PeriodicityMS;             /**< Periodicity of the task in milliseconds. */
-	uint32_t Priority;                  /**< Priority of the task. */
-	Sched_Runnable_Callback_t CallBack;   /**< Callback function to be executed as the task. */
+	uint32_t DelayMS;                       /**< Time until the task is first executed. */
+	uint32_t PeriodicityMS;                 /**< Periodicity of the task in milliseconds. */
+	uint32_t Priority;                      /**< Priority of the task. */
+	Sched_Runnable_Callback_t CallBack;     /**< Callback function to be executed as the task. */
 } Sched_Runnable_Config_t;
 
 
