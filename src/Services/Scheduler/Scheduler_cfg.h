@@ -1,32 +1,25 @@
 /**
- * @file Scheduler.h
+ * @file Scheduler_cfg.h
  * @author Ziad Gamalelden (ziad.gamalelden@gmail.com)
  * @brief 
  * @version 0.1
- * @date 2024-03-16
+ * @date 2024-03-18
  * 
  * @copyright Copyright (c) 2024
  * 
  */
-
-#ifndef SERVICES_SCHEDULER_SCHEDULER_H_
-#define SERVICES_SCHEDULER_SCHEDULER_H_
+#ifndef SERVICES_SCHEDULER_SCHEDULER_CFG_H_
+#define SERVICES_SCHEDULER_SCHEDULER_CFG_H_
 
 /********************************************************************************************************/
 /************************************************Includes************************************************/
 /********************************************************************************************************/
-#include <stdint.h>
+#include "Scheduler.h"
 
 /********************************************************************************************************/
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
-/**
- * @brief Callback function type for scheduler runnables.
- * 
- * This typedef defines the type for a callback function that can be registered
- * as a task with the scheduler.
- */
-typedef void (*Sched_Runnable_Callback_t)(void);
+
 
 
 /********************************************************************************************************/
@@ -34,41 +27,25 @@ typedef void (*Sched_Runnable_Callback_t)(void);
 /********************************************************************************************************/
 
 /**
- * @brief Configuration structure for scheduler runnables.
+ * @brief Enumeration of runnable task names.
  * 
- * This structure defines the configuration for a task that can be scheduled
- * by the scheduler.
+ * This enumeration lists the names of all the runnable tasks that can be scheduled
+ * by the scheduler. 
+ * @note _NUM_OF_RUNNABLES is used for internal calculations and should not be modified,
  */
-typedef struct	
+typedef enum
 {
-	uint32_t DelayMS;                   /**< Time until the task is first executed. */
-	uint32_t PeriodicityMS;             /**< Periodicity of the task in milliseconds. */
-	uint32_t Priority;                  /**< Priority of the task. */
-	Sched_Runnable_Callback_t CallBack;   /**< Callback function to be executed as the task. */
-} Sched_Runnable_Config_t;
+    SCHED_LEDTOG1MS,          
+    _NUM_OF_RUNNABLES,    /**< Total number of runnables. Do not modify. */
+} Sched_Runnable_Name_t;
 
+#endif /* SCHEDULER_CFG_H_ */
 
 /********************************************************************************************************/
 /************************************************APIs****************************************************/
 /********************************************************************************************************/
 
 
-/**
- * @brief Initialize the scheduler.
- * 
- * This function initializes the scheduler by reading tasks from Scheduler_cfg.c.
- * It must be called before starting the scheduler using Sched_start().
- */
-void Sched_init(void);
-
-/**
- * @brief Start the scheduler.
- * 
- * This function starts the scheduler, allowing scheduled tasks to be executed.
- * Before calling this function, ensure that the scheduler has been initialized
- * using Sched_init().
- */
-void Sched_start(void);
 
 
 
@@ -95,5 +72,4 @@ void Sched_start(void);
 
 
 
-
-#endif // SERVICES_SCHEDULER_SCHEDULER_H_
+#endif // SERVICES_SCHEDULER_SCHEDULER_CFG_H_
