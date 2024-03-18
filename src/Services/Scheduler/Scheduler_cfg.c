@@ -23,20 +23,34 @@
 /********************************************************************************************************/
 /************************************************Types***************************************************/
 /********************************************************************************************************/
-extern void ToggleLed1MS(void);
-
-
+extern void ToggleRedLed1MS(void);
+extern void ToggleYellowLed1MS(void);
+extern void ToggleGreenLed1MS(void);
 /********************************************************************************************************/
 /************************************************Variables***********************************************/
 /********************************************************************************************************/
 
 Sched_Runnable_Config_t Sched_Runnables[_NUM_OF_RUNNABLES] = 
 {
-    [SCHED_LEDTOG1MS]=
+    [SCHED_REDLEDTOG1MS]=
     {
-        .CallBack = ToggleLed1MS,
+        .CallBack = ToggleRedLed1MS,
         .DelayMS = 0,
         .PeriodicityMS = 1000,
         .Priority = 0,        
-    }
+    },
+    [SCHED_YELLOWLEDTOG1MS]=
+    {
+        .CallBack = ToggleYellowLed1MS,
+        .DelayMS = 0,
+        .PeriodicityMS = 500,
+        .Priority = 0,        
+    },
+    [SCHED_GREENLEDTOG1MS]=
+    {
+        .CallBack = ToggleGreenLed1MS,
+        .DelayMS = 0,
+        .PeriodicityMS = 100,
+        .Priority = 0,        
+    },        
 };
