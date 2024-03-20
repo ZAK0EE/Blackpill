@@ -37,8 +37,8 @@ typedef enum
 {
     SCHED_REDLEDTOG1MS,
     SCHED_YELLOWLEDTOG1MS,          
-    SCHED_GREENLEDTOG1MS,  
-    SCHED_SWITCH15MS,        
+    SCHED_SWITCHTOGGLEAPP,  
+    SCHED_SWITCH5MS,        
          
     _NUM_OF_RUNNABLES,    /**< Total number of runnables. Do not modify. */
 } Sched_Runnable_Name_t;
