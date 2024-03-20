@@ -38,7 +38,7 @@
 typedef struct
 {
     Sched_Runnable_Config_t *Runnable;  /**< Pointer to the configuration of the scheduled task */
-    uint32_t RemainingTimeMS;           /**< Remaining time until the task's next execution */
+    int32_t RemainingTimeMS;           /**< Remaining time until the task's next execution */
 } RunnableInfo_t;
 
 
@@ -60,7 +60,7 @@ extern Sched_Runnable_Config_t Sched_Runnables[_NUM_OF_RUNNABLES];
  * @brief Variable to track the number of pending ticks.
  * 
  */
-static uint32_t PendingTicks = 0;
+static uint32_t PendingTicks = 1;
 
 /**
  * @brief Array to store runtime information for each runnable task.
@@ -98,7 +98,7 @@ static void Scheduler(void)
 	for(idx = 0; idx < _NUM_OF_RUNNABLES; idx++)
 	{
 
-		if(rinfo[idx].Runnable && rinfo[idx].Runnable->CallBack && rinfo[idx].RemainingTimeMS == 0)
+		if(rinfo[idx].Runnable && rinfo[idx].Runnable->CallBack && rinfo[idx].RemainingTimeMS <= 0)
 		{
 
 			rinfo[idx].Runnable->CallBack();
