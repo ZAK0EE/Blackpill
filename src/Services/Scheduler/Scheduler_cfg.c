@@ -26,6 +26,8 @@
 extern void ToggleRedLed1MS(void);
 extern void ToggleYellowLed1MS(void);
 extern void ToggleGreenLed1MS(void);
+extern void switchapp(void);
+extern void Switch_Task_CheckState(void);
 /********************************************************************************************************/
 /************************************************Variables***********************************************/
 /********************************************************************************************************/
@@ -37,20 +39,23 @@ Sched_Runnable_Config_t Sched_Runnables[_NUM_OF_RUNNABLES] =
         .CallBack = ToggleRedLed1MS,
         .DelayMS = 0,
         .PeriodicityMS = 1000,
-        .Priority = 0,        
     },
     [SCHED_YELLOWLEDTOG1MS]=
     {
         .CallBack = ToggleYellowLed1MS,
         .DelayMS = 0,
         .PeriodicityMS = 500,
-        .Priority = 0,        
     },
     [SCHED_GREENLEDTOG1MS]=
     {
-        .CallBack = ToggleGreenLed1MS,
+        .CallBack = switchapp,
         .DelayMS = 0,
-        .PeriodicityMS = 100,
-        .Priority = 0,        
-    },        
+        .PeriodicityMS = 50,
+    }, 
+    [SCHED_SWITCH15MS]=
+    {
+        .CallBack = Switch_Task_CheckState,
+        .DelayMS = 0,
+        .PeriodicityMS = 5,
+    },            
 };
