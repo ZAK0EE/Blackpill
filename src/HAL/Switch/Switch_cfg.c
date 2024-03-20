@@ -11,10 +11,10 @@
 
  Switch_Config_t Switch_Configs[_NUM_OF_SWITCHES]=
  {
-	 [SwWITCH_LEDTOGGLE]=
+	 [SWITCH_LEDTOGGLE]=
 	 {
         .PortID = 0,
-        .PinNum = 2,
+        .PinNum = 3,
         .ActiveType = SWITCH_ACTIVELOW,
         .PUConfig = SWITCH_ENABLE_INTERNALPU
 	 },

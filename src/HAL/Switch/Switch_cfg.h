@@ -18,7 +18,7 @@
 
 typedef enum
 {
-    SwWITCH_LEDTOGGLE,
+    SWITCH_LEDTOGGLE,
     _NUM_OF_SWITCHES
 }SWITCHES;
 

@@ -82,4 +82,28 @@ Switch_Error_t Switch_init(void);
  */
 Switch_StateType_t Switch_getSwitchState(uint32_t SwitchID);
 
+/**
+ * @brief Task function to check the state of switches.
+ * 
+ * This function is responsible for periodically checking the state of switches
+ * and performing any necessary actions based on the switch state. It should be
+ * called periodically by the scheduler to ensure timely switch state updates.
+ */
+void Switch_Task_CheckState(void);
+
+/**
+ * @brief Asynchronously retrieves the state of a switch.
+ * 
+ * This function asynchronously retrieves the state of the specified switch
+ * without waiting for the switch state to be polled or updated. It returns
+ * the current state of the switch.
+ * 
+ * @param SwitchID The ID of the switch to retrieve its state.
+ * @note Switch_Task_CheckState must be functioning for this function
+ * to be working right
+ * @return Switch_StateType_t The current state of the switch (pressed or released).
+ */
+Switch_StateType_t Switch_getSwitchStateAsync(uint32_t SwitchID);
+
+
 #endif /* HAL_SWITCH_SWITCH_H_ */
