@@ -40,7 +40,7 @@ typedef enum {
 typedef struct {
     SysTick_ClockSource_t ClockSource;          /**< SysTick clock source */
     SysTick_ExceptionState_t ExceptionState;    /**< SysTick exception state */
-    SysTick_CallBackFn_t CallbackFunction;
+    SysTick_CallBackFn_t CallbackFunction;      /**< SysTick exception state */
 } SysTick_Config_t;
 
 
