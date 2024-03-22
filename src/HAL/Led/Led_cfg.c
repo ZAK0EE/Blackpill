@@ -34,7 +34,7 @@
 	{
         .PortID = 0,
         .PinNum = 0,
-        .ActiveType = LED_ACTIVELOW,
+        .ActiveType = LED_ACTIVEHIGH,
         .LedInitState = LED_OFF,
 	},
     
@@ -42,14 +42,14 @@
 	{
         .PortID = 0,
         .PinNum = 1,
-        .ActiveType = LED_ACTIVELOW,
+        .ActiveType = LED_ACTIVEHIGH,
         .LedInitState = LED_OFF,
 	},
         [LED_GREEN]=
 	{
         .PortID = 0,
         .PinNum = 2,
-        .ActiveType = LED_ACTIVELOW,
+        .ActiveType = LED_ACTIVEHIGH,
         .LedInitState = LED_OFF,
 	},     
 

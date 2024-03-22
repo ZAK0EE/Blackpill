@@ -25,37 +25,21 @@
 /********************************************************************************************************/
 extern void ToggleRedLed1MS(void);
 extern void ToggleYellowLed1MS(void);
-extern void ToggleGreenLed1MS(void);
 extern void SwitchToggle_task(void);
 extern void Switch_Task_CheckState(void);
+extern void TrafficLight_task(void);
 /********************************************************************************************************/
 /************************************************Variables***********************************************/
 /********************************************************************************************************/
 
 Sched_Runnable_Config_t Sched_Runnables[_NUM_OF_RUNNABLES] = 
 {
-    [SCHED_REDLEDTOG1MS]=
+
+
+    [SCHED_TRAFFICLIGHT]=
     {
-        .CallBack = ToggleRedLed1MS,
+        .CallBack = TrafficLight_task,
         .DelayMS = 0,
         .PeriodicityMS = 1000,
-    },
-    [SCHED_YELLOWLEDTOG1MS]=
-    {
-        .CallBack = ToggleYellowLed1MS,
-        .DelayMS = 0,
-        .PeriodicityMS = 500,
-    },
-    [SCHED_SWITCHTOGGLEAPP]=
-    {
-        .CallBack = SwitchToggle_task,
-        .DelayMS = 0,
-        .PeriodicityMS = 50,
-    }, 
-    [SCHED_SWITCH5MS]=
-    {
-        .CallBack = Switch_Task_CheckState,
-        .DelayMS = 0,
-        .PeriodicityMS = 5,
-    },            
+    },                 
 };
