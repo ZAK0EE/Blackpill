@@ -38,7 +38,7 @@
 typedef struct
 {
     Sched_Runnable_Config_t *Runnable;  /**< Pointer to the configuration of the scheduled task */
-    int32_t RemainingTimeMS;           /**< Remaining time until the task's next execution */
+    int64_t RemainingTimeMS;           /**< Remaining time until the task's next execution */
 } RunnableInfo_t;
 
 
