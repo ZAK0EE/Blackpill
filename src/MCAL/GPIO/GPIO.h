@@ -42,7 +42,7 @@ typedef enum
     GPIO_GPIOD, /**< GPIO port D. */
     GPIO_GPIOE, /**< GPIO port E. */
     GPIO_GPIOH  /**< GPIO port H. */
-} GPIO_PortTypeDef;
+} GPIO_Port_t;
 
 /**
  * @brief Enumeration defining GPIO pin numbers.
@@ -68,7 +68,7 @@ typedef enum
     GPIO_PIN13,  /**< GPIO pin number 13. */
     GPIO_PIN14,  /**< GPIO pin number 14. */
     GPIO_PIN15   /**< GPIO pin number 15. */
-} GPIO_PinTypeDef;
+} GPIO_Pin_t;
 
 /**
  * @brief Enumeration defining GPIO pin modes, pull configurations, and output types.
@@ -108,7 +108,7 @@ typedef enum
     GPIO_MODE_ALTERNATE_OPENDRAIN_PULLUP      = 0x112UL, /**< Alternate function mode, open-drain, with pull-up resistor. */
     GPIO_MODE_ALTERNATE_OPENDRAIN_PULLDOWN    = 0x122UL  /**< Alternate function mode, open-drain, with pull-down resistor. */
 
-} GPIO_PinModeTypeDef;
+} GPIO_PinMode_t;
 
 
 /**
@@ -122,7 +122,7 @@ typedef enum
     GPIO_SPEED_MEDIUM,      /**< Medium speed. */
     GPIO_SPEED_HIGH,        /**< High speed. */
     GPIO_SPEED_VERY_HIGH    /**< Very high speed. */
-} GPIO_PinSpeedTypeDef;
+} GPIO_PinSpeed_t;
 
 
 /**
@@ -136,7 +136,7 @@ typedef enum
 {
     GPIO_PINSTATE_RESET, /**< Logic low state or deactivation. */
     GPIO_PINSTATE_SET    /**< Logic high state or activation. */
-} GPIO_PinStateTypeDef;
+} GPIO_PinState_t;
 
 
 
@@ -153,11 +153,11 @@ typedef enum
  */
 typedef struct
 {
-    GPIO_PortTypeDef       Port;        /**< GPIO port to which the pin belongs. */
-    GPIO_PinTypeDef        PinNumber;   /**< Specific GPIO pin number. */
-    GPIO_PinModeTypeDef    PinMode;     /**< Configuration for pin mode. */
-    GPIO_PinSpeedTypeDef   PinSpeed;    /**< Speed setting for the GPIO pin. */
-} GPIO_PinConfigTypeDef;
+    GPIO_Port_t       Port;        /**< GPIO port to which the pin belongs. */
+    GPIO_Pin_t        PinNumber;   /**< Specific GPIO pin number. */
+    GPIO_PinMode_t    PinMode;     /**< Configuration for pin mode. */
+    GPIO_PinSpeed_t   PinSpeed;    /**< Speed setting for the GPIO pin. */
+} GPIO_PinConfig_t;
 
 
 /********************************************************************************************************/
@@ -167,12 +167,12 @@ typedef struct
 /**
  * @brief Initializes a GPIO pin based on the provided configuration.
  *
- * This function configures a GPIO pin based on the parameters specified in the provided `GPIO_PinConfigTypeDef`.
+ * This function configures a GPIO pin based on the parameters specified in the provided `GPIO_PinConfig_t`.
  *
  * @param[in] PinConfig Configuration structure for the GPIO pin.
- * @return Status indicating the success or failure of the initialization @ref MCAL_StatusTypeDef.
+ * @return Status indicating the success or failure of the initialization @ref MCAL_Status_t.
  */
-MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef *PinConfig);
+MCAL_Status_t GPIO_initPin(GPIO_PinConfig_t *PinConfig);
 
 /**
  * @brief Sets the value of a GPIO pin.
@@ -182,9 +182,9 @@ MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef *PinConfig);
  * @param[in] Port The GPIO port to which the pin belongs.
  * @param[in] PinNumber The specific GPIO pin number.
  * @param[in] PinState The desired state of the GPIO pin (GPIO_PIN_HIGH or GPIO_PIN_LOW).
- * @return Status indicating the success or failure of the initialization @ref MCAL_StatusTypeDef.
+ * @return Status indicating the success or failure of the initialization @ref MCAL_Status_t.
  */
-MCAL_StatusTypeDef GPIO_setPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber, GPIO_PinStateTypeDef PinState);
+MCAL_Status_t GPIO_setPinValue(GPIO_Port_t Port, GPIO_Pin_t PinNumber, GPIO_PinState_t PinState);
 
 /**
  * @brief Gets the current value of a GPIO pin.
@@ -193,8 +193,8 @@ MCAL_StatusTypeDef GPIO_setPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNu
  *
  * @param[in] Port The GPIO port to which the pin belongs.
  * @param[in] PinNumber The specific GPIO pin number.
- * @return The current state of the GPIO pin  @ref GPIO_PinStateTypeDef.
+ * @return The current state of the GPIO pin  @ref GPIO_PinState_t.
  */
-GPIO_PinStateTypeDef GPIO_getPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber);
+GPIO_PinState_t GPIO_getPinValue(GPIO_Port_t Port, GPIO_Pin_t PinNumber);
 
 #endif // MCAL_GPIO_GPIO_H_

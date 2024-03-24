@@ -147,33 +147,33 @@ typedef enum
  * @brief Enable the specified NVIC interrupt.
  * 
  * @param NVIC_IRQ NVIC interrupt to be enabled.
- * @return MCAL_StatusTypeDef Status after enabling the interrupt.
+ * @return MCAL_Status_t Status after enabling the interrupt.
  */
-MCAL_StatusTypeDef NVIC_enableIRQ(NVIC_IRQ_t NVIC_IRQ);
+MCAL_Status_t NVIC_enableIRQ(NVIC_IRQ_t NVIC_IRQ);
 
 /**
  * @brief Disable the specified NVIC interrupt.
  * 
  * @param NVIC_IRQ NVIC interrupt to be disabled.
- * @return MCAL_StatusTypeDef Status after disabling the interrupt.
+ * @return MCAL_Status_t Status after disabling the interrupt.
  */
-MCAL_StatusTypeDef NVIC_disableIRQ(NVIC_IRQ_t NVIC_IRQ);
+MCAL_Status_t NVIC_disableIRQ(NVIC_IRQ_t NVIC_IRQ);
 
 /**
  * @brief Set the pending status for the specified NVIC interrupt.
  * 
  * @param NVIC_IRQ NVIC interrupt for which pending status is to be set.
- * @return MCAL_StatusTypeDef Status after setting the pending status.
+ * @return MCAL_Status_t Status after setting the pending status.
  */
-MCAL_StatusTypeDef NVIC_setPendingIRQ(NVIC_IRQ_t NVIC_IRQ);
+MCAL_Status_t NVIC_setPendingIRQ(NVIC_IRQ_t NVIC_IRQ);
 
 /**
  * @brief Clear the pending status for the specified NVIC interrupt.
  * 
  * @param NVIC_IRQ NVIC interrupt for which pending status is to be cleared.
- * @return MCAL_StatusTypeDef Status after clearing the pending status.
+ * @return MCAL_Status_t Status after clearing the pending status.
  */
-MCAL_StatusTypeDef NVIC_clearPendingIRQ(NVIC_IRQ_t NVIC_IRQ);
+MCAL_Status_t NVIC_clearPendingIRQ(NVIC_IRQ_t NVIC_IRQ);
 
 /**
  * @brief Get the pending status of the specified NVIC interrupt.
@@ -197,11 +197,11 @@ NVIC_IsActive_t NVIC_getActiveStatus(NVIC_IRQ_t NVIC_IRQ);
  * This function generates a software interrupt for the specified Nested Vectored Interrupt Controller (NVIC) interrupt.
  *
  * @param NVIC_IRQ The NVIC_IRQ_t representing the interrupt for which a software interrupt should be generated.
- * @return MCAL_StatusTypeDef indicating the status of the operation
+ * @return MCAL_Status_t indicating the status of the operation
  *
  * @note When the USERSETMPEND bit in the SCR is set to 1, unprivileged access to this function is allowed
  */
-MCAL_StatusTypeDef NVIC_generateSWInterrupt(NVIC_IRQ_t NVIC_IRQ);
+MCAL_Status_t NVIC_generateSWInterrupt(NVIC_IRQ_t NVIC_IRQ);
 
 /**
  * @brief Set the priority grouping for the Nested Vectored Interrupt Controller (NVIC).
@@ -213,9 +213,9 @@ MCAL_StatusTypeDef NVIC_generateSWInterrupt(NVIC_IRQ_t NVIC_IRQ);
  * @param PriorityGrouping The priority grouping option to be set for the NVIC.
  *                         
  *
- * @return MCAL_StatusTypeDef Status of the operation, indicating success or failure.
+ * @return MCAL_Status_t Status of the operation, indicating success or failure.
  */
-MCAL_StatusTypeDef NVIC_setPriorityGrouping(NVIC_PG_t PriorityGrouping);
+MCAL_Status_t NVIC_setPriorityGrouping(NVIC_PG_t PriorityGrouping);
 
 
 /**
@@ -231,9 +231,9 @@ MCAL_StatusTypeDef NVIC_setPriorityGrouping(NVIC_PG_t PriorityGrouping);
  * @param Preemption     The preemption priority level to be assigned to the interrupt.
  * @param SubGroup       The subpriority level to be assigned to the interrupt.
  *
- * @return MCAL_StatusTypeDef Status of the operation, indicating success or failure.
+ * @return MCAL_Status_t Status of the operation, indicating success or failure.
  */
-MCAL_StatusTypeDef NVIC_SetPriority(NVIC_IRQ_t IRQ, NVIC_PG_t PriorityGrouping, uint8_t Preemption, uint8_t SubGroup);
+MCAL_Status_t NVIC_SetPriority(NVIC_IRQ_t IRQ, NVIC_PG_t PriorityGrouping, uint8_t Preemption, uint8_t SubGroup);
 
 
 

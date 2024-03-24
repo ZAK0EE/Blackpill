@@ -182,7 +182,7 @@ typedef struct
 /*********************************************APIs Implementation****************************************/
 /********************************************************************************************************/
 
-MCAL_StatusTypeDef RCC_enableClock(RCC_ClockTypeDef Clock)
+MCAL_Status_t RCC_enableClock(RCC_ClockTypeDef Clock)
 {
     assert_param(IS_RCC_CLOCK(Clock));
 
@@ -196,7 +196,7 @@ MCAL_StatusTypeDef RCC_enableClock(RCC_ClockTypeDef Clock)
     return (RCC->CR & clockStatusMask)? MCAL_OK : MCAL_TIMEOUT;
 }
 
-MCAL_StatusTypeDef RCC_disableClock(RCC_ClockTypeDef Clock)
+MCAL_Status_t RCC_disableClock(RCC_ClockTypeDef Clock)
 {
     assert_param(IS_RCC_CLOCK(Clock));
 
@@ -205,7 +205,7 @@ MCAL_StatusTypeDef RCC_disableClock(RCC_ClockTypeDef Clock)
 }
 
 
-MCAL_StatusTypeDef RCC_selectSystemClock(RCC_SystemClockTypeDef SystemClock)
+MCAL_Status_t RCC_selectSystemClock(RCC_SystemClockTypeDef SystemClock)
 {
 
     assert_param(IS_RCC_SYSTEMCLOCK(SystemClock));
@@ -218,7 +218,7 @@ MCAL_StatusTypeDef RCC_selectSystemClock(RCC_SystemClockTypeDef SystemClock)
 }
 
 
-MCAL_StatusTypeDef RCC_getSystemClock(RCC_SystemClockTypeDef *SystemClock)
+MCAL_Status_t RCC_getSystemClock(RCC_SystemClockTypeDef *SystemClock)
 {
     assert_param(SystemClock);
 
@@ -228,7 +228,7 @@ MCAL_StatusTypeDef RCC_getSystemClock(RCC_SystemClockTypeDef *SystemClock)
 }
 
 
-MCAL_StatusTypeDef RCC_configurePLLClock(RCC_PLLConfigTypeDef *PLLConfig)
+MCAL_Status_t RCC_configurePLLClock(RCC_PLLConfigTypeDef *PLLConfig)
 {
     uint32_t PLLCFGRtmp = RCC->PLLCFGR;
 
@@ -254,7 +254,7 @@ MCAL_StatusTypeDef RCC_configurePLLClock(RCC_PLLConfigTypeDef *PLLConfig)
 }
 
 
-MCAL_StatusTypeDef RCC_enableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peripheral)
+MCAL_Status_t RCC_enableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peripheral)
 {
     assert_param(IS_RCC_AHB1PERIPHERAL(AHB1Peripheral));
 
@@ -263,7 +263,7 @@ MCAL_StatusTypeDef RCC_enableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Perip
 }
 
 
-MCAL_StatusTypeDef RCC_enableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peripheral)
+MCAL_Status_t RCC_enableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peripheral)
 {
     assert_param(IS_RCC_AHB2PERIPHERAL(AHB2Peripheral));
 
@@ -271,7 +271,7 @@ MCAL_StatusTypeDef RCC_enableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Perip
     return MCAL_OK;
 }
 
-MCAL_StatusTypeDef RCC_enableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peripheral)
+MCAL_Status_t RCC_enableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peripheral)
 {
     assert_param(IS_RCC_APB1PERIPHERAL(APB1Peripheral));
 
@@ -279,7 +279,7 @@ MCAL_StatusTypeDef RCC_enableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Perip
     return MCAL_OK;
 }
 
-MCAL_StatusTypeDef RCC_enableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral)
+MCAL_Status_t RCC_enableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral)
 {
     assert_param(IS_RCC_APB2PERIPHERAL(APB2Peripheral));
 
@@ -287,7 +287,7 @@ MCAL_StatusTypeDef RCC_enableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Perip
     return MCAL_OK;
 }
 
-MCAL_StatusTypeDef RCC_disableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peripheral)
+MCAL_Status_t RCC_disableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peripheral)
 {
     assert_param(IS_RCC_AHB1PERIPHERAL(AHB1Peripheral));
 
@@ -295,7 +295,7 @@ MCAL_StatusTypeDef RCC_disableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peri
     return MCAL_OK;
 }
 
-MCAL_StatusTypeDef RCC_disableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peripheral)
+MCAL_Status_t RCC_disableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peripheral)
 {
     assert_param(IS_RCC_AHB2PERIPHERAL(AHB2Peripheral));
 
@@ -303,7 +303,7 @@ MCAL_StatusTypeDef RCC_disableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peri
     return MCAL_OK;
 }
 
-MCAL_StatusTypeDef RCC_disableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peripheral)
+MCAL_Status_t RCC_disableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peripheral)
 {
     assert_param(IS_RCC_APB1PERIPHERAL(APB1Peripheral));
 
@@ -311,7 +311,7 @@ MCAL_StatusTypeDef RCC_disableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peri
     return MCAL_OK;
 }
 
-MCAL_StatusTypeDef RCC_disableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral)
+MCAL_Status_t RCC_disableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral)
 {
     assert_param(IS_RCC_APB2PERIPHERAL(APB2Peripheral));
 
@@ -319,7 +319,7 @@ MCAL_StatusTypeDef RCC_disableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peri
     return MCAL_OK;
 }
 
-MCAL_StatusTypeDef RCC_selectSystemClockPrescalers(RCC_AHB1PrescalerTypeDef AHB1Prescaler, RCC_APB1PrescalerTypeDef APB1Prescaler, RCC_APB2PrescalerTypeDef APB2Prescaler)
+MCAL_Status_t RCC_selectSystemClockPrescalers(RCC_AHB1PrescalerTypeDef AHB1Prescaler, RCC_APB1PrescalerTypeDef APB1Prescaler, RCC_APB2PrescalerTypeDef APB2Prescaler)
 {
     assert_param(IS_RCC_AHB1PRESCALER(AHB1Prescaler));
     assert_param(IS_RCC_APB1PRESCALER(APB1Prescaler));

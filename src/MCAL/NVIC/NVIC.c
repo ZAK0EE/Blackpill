@@ -148,7 +148,7 @@ static void clearPendingIRQ(NVIC_IRQ_t NVIC_IRQ)
 
 
 
-MCAL_StatusTypeDef NVIC_enableIRQ(NVIC_IRQ_t NVIC_IRQ)
+MCAL_Status_t NVIC_enableIRQ(NVIC_IRQ_t NVIC_IRQ)
 {
     assert_param(IS_VALID_NVIC_IRQ(NVIC_IRQ));
 
@@ -161,7 +161,7 @@ MCAL_StatusTypeDef NVIC_enableIRQ(NVIC_IRQ_t NVIC_IRQ)
     return MCAL_OK;
 }
 
-MCAL_StatusTypeDef NVIC_disableIRQ(NVIC_IRQ_t NVIC_IRQ)
+MCAL_Status_t NVIC_disableIRQ(NVIC_IRQ_t NVIC_IRQ)
 {
     assert_param(IS_VALID_NVIC_IRQ(NVIC_IRQ));
 
@@ -172,7 +172,7 @@ MCAL_StatusTypeDef NVIC_disableIRQ(NVIC_IRQ_t NVIC_IRQ)
 
 }
 
-MCAL_StatusTypeDef NVIC_setPendingIRQ(NVIC_IRQ_t NVIC_IRQ)
+MCAL_Status_t NVIC_setPendingIRQ(NVIC_IRQ_t NVIC_IRQ)
 {
     assert_param(IS_VALID_NVIC_IRQ(NVIC_IRQ));
 
@@ -181,7 +181,7 @@ MCAL_StatusTypeDef NVIC_setPendingIRQ(NVIC_IRQ_t NVIC_IRQ)
     return MCAL_OK;
 }
 
-MCAL_StatusTypeDef NVIC_clearPendingIRQ(NVIC_IRQ_t NVIC_IRQ)
+MCAL_Status_t NVIC_clearPendingIRQ(NVIC_IRQ_t NVIC_IRQ)
 {
     assert_param(IS_VALID_NVIC_IRQ(NVIC_IRQ));
 
@@ -207,7 +207,7 @@ NVIC_IsActive_t NVIC_getActiveStatus(NVIC_IRQ_t NVIC_IRQ)
 
 }
 
-MCAL_StatusTypeDef NVIC_generateSWInterrupt(NVIC_IRQ_t NVIC_IRQ)
+MCAL_Status_t NVIC_generateSWInterrupt(NVIC_IRQ_t NVIC_IRQ)
 {
     assert_param(IS_VALID_NVIC_IRQ(NVIC_IRQ));
 
@@ -217,7 +217,7 @@ MCAL_StatusTypeDef NVIC_generateSWInterrupt(NVIC_IRQ_t NVIC_IRQ)
   
 }
 
-MCAL_StatusTypeDef NVIC_setPriorityGrouping(NVIC_PG_t PriorityGrouping)
+MCAL_Status_t NVIC_setPriorityGrouping(NVIC_PG_t PriorityGrouping)
 {
     assert_param(IS_VALID_NVIC_PG(PriorityGrouping));
 
@@ -227,7 +227,7 @@ MCAL_StatusTypeDef NVIC_setPriorityGrouping(NVIC_PG_t PriorityGrouping)
     return MCAL_OK;
 }
 
-MCAL_StatusTypeDef NVIC_SetPriority(NVIC_IRQ_t IRQ, NVIC_PG_t PriorityGrouping, uint8_t Preemption, uint8_t SubGroup)
+MCAL_Status_t NVIC_SetPriority(NVIC_IRQ_t IRQ, NVIC_PG_t PriorityGrouping, uint8_t Preemption, uint8_t SubGroup)
 {
     assert_param(IS_VALID_NVIC_IRQ(IRQ));
     assert_param(IS_VALID_NVIC_PG(PriorityGrouping));

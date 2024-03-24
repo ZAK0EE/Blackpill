@@ -122,7 +122,7 @@ GPIO_TypeDef volatile *const GPIOS[NUM_OF_GPIOS] = {
 /*********************************************APIs Implementation****************************************/
 /********************************************************************************************************/
 
-MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef *PinConfig)
+MCAL_Status_t GPIO_initPin(GPIO_PinConfig_t *PinConfig)
 {
     GPIO_TypeDef volatile *const GPIO = GPIOS[PinConfig->Port];
 
@@ -151,7 +151,7 @@ MCAL_StatusTypeDef GPIO_initPin(GPIO_PinConfigTypeDef *PinConfig)
     return MCAL_OK;
 }
 
-MCAL_StatusTypeDef GPIO_setPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber, GPIO_PinStateTypeDef PinState)
+MCAL_Status_t GPIO_setPinValue(GPIO_Port_t Port, GPIO_Pin_t PinNumber, GPIO_PinState_t PinState)
 {
     assert_param(IS_GPIO_PORT(Port));
     assert_param(IS_GPIO_PIN(PinNumber));
@@ -162,7 +162,7 @@ MCAL_StatusTypeDef GPIO_setPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNu
     return MCAL_OK;
 }
 
-GPIO_PinStateTypeDef GPIO_getPinValue(GPIO_PortTypeDef Port, GPIO_PinTypeDef PinNumber)
+GPIO_PinState_t GPIO_getPinValue(GPIO_Port_t Port, GPIO_Pin_t PinNumber)
 {
 
     assert_param(IS_GPIO_PORT(Port));

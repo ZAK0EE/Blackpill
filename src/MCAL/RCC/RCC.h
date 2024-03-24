@@ -197,20 +197,20 @@ typedef struct
  * @brief Enable a specific clock source given as a parameter
  *
  * @param Clock The system component for which the clock needs to be enabled.
- * @return Status of the operation. See @ref MCAL_StatusTypeDef for possible values.
+ * @return Status of the operation. See @ref MCAL_Status_t for possible values.
  *
  * @note Ensure that the necessary PLL configurations are set before enabling the clock.
  * @note Clock will be enabled only if it is ready
  */
-MCAL_StatusTypeDef RCC_enableClock(RCC_ClockTypeDef Clock);
+MCAL_Status_t RCC_enableClock(RCC_ClockTypeDef Clock);
 
 /**
  * @brief Disable a specific clock source given as a parameter
  *
  * @param Clock The system component for which the clock needs to be disabled (see @ref RCC_ClockTypeDef).
- * @return Status of the operation. See @ref MCAL_StatusTypeDef for possible values.
+ * @return Status of the operation. See @ref MCAL_Status_t for possible values.
  */
-MCAL_StatusTypeDef RCC_disableClock(RCC_ClockTypeDef Clock);
+MCAL_Status_t RCC_disableClock(RCC_ClockTypeDef Clock);
 
 /**
  * @brief Selects the system clock source
@@ -218,7 +218,7 @@ MCAL_StatusTypeDef RCC_disableClock(RCC_ClockTypeDef Clock);
  *                    This parameter can be a value of @ref RCC_SystemClockTypeDef
  * @retval MCAL_OK if the system clock was successfully selected
  */
-MCAL_StatusTypeDef RCC_selectSystemClock(RCC_SystemClockTypeDef SystemClock);
+MCAL_Status_t RCC_selectSystemClock(RCC_SystemClockTypeDef SystemClock);
 
 /**
  * @brief Get the system clock source
@@ -226,7 +226,7 @@ MCAL_StatusTypeDef RCC_selectSystemClock(RCC_SystemClockTypeDef SystemClock);
  * 		                   This parameter can be a value of @ref RCC_SystemClockTypeDef
  * @return MCAL_OK if the system clock source was read successfully
  */
-MCAL_StatusTypeDef RCC_getSystemClock(RCC_SystemClockTypeDef *SystemClock);
+MCAL_Status_t RCC_getSystemClock(RCC_SystemClockTypeDef *SystemClock);
 
 /**
  * @brief Select and configure the system clock prescalers using the RCC (Reset and Clock Control) module.
@@ -237,19 +237,19 @@ MCAL_StatusTypeDef RCC_getSystemClock(RCC_SystemClockTypeDef *SystemClock);
  * @param AHB1Prescaler The AHB1 bus prescaler (see @ref RCC_AHB1PrescalerTypeDef).
  * @param APB1Prescaler The APB1 bus prescaler (see @ref RCC_APB1PrescalerTypeDef).
  * @param APB2Prescaler The APB2 bus prescaler (see @ref RCC_APB2PrescalerTypeDef).
- * @return Status of the operation. See @ref MCAL_StatusTypeDef for possible values.
+ * @return Status of the operation. See @ref MCAL_Status_t for possible values.
  *
  * @note This function should be called after configuring the PLL and before enabling peripherals
  *       that depend on the selected system clock.
  */
-MCAL_StatusTypeDef RCC_selectSystemClockPrescalers(RCC_AHB1PrescalerTypeDef AHB1Prescaler, RCC_APB1PrescalerTypeDef APB1Prescaler, RCC_APB2PrescalerTypeDef APB2Prescaler);
+MCAL_Status_t RCC_selectSystemClockPrescalers(RCC_AHB1PrescalerTypeDef AHB1Prescaler, RCC_APB1PrescalerTypeDef APB1Prescaler, RCC_APB2PrescalerTypeDef APB2Prescaler);
 
 /**
  * @brief Configures the PLL clock.
  * @param PLLConfig pointer to a @ref RCC_PLLConfigTypeDef structure that contains the configuration information for the PLL.
  * @retval MCAL_OK if the PLL clock was successfully configured.
  */
-MCAL_StatusTypeDef RCC_configurePLLClock(RCC_PLLConfigTypeDef *PLLConfig);
+MCAL_Status_t RCC_configurePLLClock(RCC_PLLConfigTypeDef *PLLConfig);
 
 /**
  * @brief Enables the clock for a specific AHB1 peripheral
@@ -257,7 +257,7 @@ MCAL_StatusTypeDef RCC_configurePLLClock(RCC_PLLConfigTypeDef *PLLConfig);
  *   		             This parameter can be a value of @ref RCC_AHB1PeripheralTypeDef
  * @retval MCAL_OK if the peripheral clock was successfully enabled
  */
-MCAL_StatusTypeDef RCC_enableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peripheral);
+MCAL_Status_t RCC_enableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peripheral);
 
 /**
  * @brief Enables the clock for a specific AHB2 peripheral
@@ -265,7 +265,7 @@ MCAL_StatusTypeDef RCC_enableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Perip
  *   		             This parameter can be a value of @ref RCC_AHB2PeripheralTypeDef
  * @retval MCAL_OK if the peripheral clock was successfully enabled
  */
-MCAL_StatusTypeDef RCC_enableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peripheral);
+MCAL_Status_t RCC_enableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peripheral);
 
 /**
  * @brief Enables the clock for a specific APB1 peripheral
@@ -273,7 +273,7 @@ MCAL_StatusTypeDef RCC_enableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Perip
  *                        This parameter can be a value of @ref RCC_APB1PeripheralTypeDef
  * @retval MCAL_OK if the peripheral clock was successfully enabled
  */
-MCAL_StatusTypeDef RCC_enableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peripheral);
+MCAL_Status_t RCC_enableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peripheral);
 
 /**
  * @brief Enables the clock for a specific APB2 peripheral
@@ -281,7 +281,7 @@ MCAL_StatusTypeDef RCC_enableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Perip
  *                        This parameter can be a value of @ref RCC_APB2PeripheralTypeDef
  * @retval MCAL_OK if the peripheral clock was successfully enabled
  */
-MCAL_StatusTypeDef RCC_enableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral);
+MCAL_Status_t RCC_enableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral);
 
 
 /**
@@ -290,7 +290,7 @@ MCAL_StatusTypeDef RCC_enableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Perip
  * @param AHB1Peripheral: AHB1 peripheral to be disabled.
  * @return MCAL_OK if the operation is successful, otherwise an error code.
  */
-MCAL_StatusTypeDef RCC_disableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peripheral);
+MCAL_Status_t RCC_disableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peripheral);
 
 /**
  * @brief Disable the specified AHB2 peripheral.
@@ -298,7 +298,7 @@ MCAL_StatusTypeDef RCC_disableAHB1Peripheral(RCC_AHB1PeripeheralTypeDef AHB1Peri
  * @param AHB2Peripheral: AHB2 peripheral to be disabled.
  * @return MCAL_OK if the operation is successful, otherwise an error code.
  */
-MCAL_StatusTypeDef RCC_disableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peripheral);
+MCAL_Status_t RCC_disableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peripheral);
 
 /**
  * @brief Disable the specified APB1 peripheral.
@@ -306,7 +306,7 @@ MCAL_StatusTypeDef RCC_disableAHB2Peripheral(RCC_AHB2PeripeheralTypeDef AHB2Peri
  * @param APB1Peripheral: APB1 peripheral to be disabled.
  * @return MCAL_OK if the operation is successful, otherwise an error code.
  */
-MCAL_StatusTypeDef RCC_disableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peripheral);
+MCAL_Status_t RCC_disableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peripheral);
 
 /**
  * @brief Disable the specified APB2 peripheral.
@@ -314,6 +314,6 @@ MCAL_StatusTypeDef RCC_disableAPB1Peripheral(RCC_APB1PeripeheralTypeDef APB1Peri
  * @param APB2Peripheral: APB2 peripheral to be disabled.
  * @return MCAL_OK if the operation is successful, otherwise an error code.
  */
-MCAL_StatusTypeDef RCC_disableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral);
+MCAL_Status_t RCC_disableAPB2Peripheral(RCC_APB2PeripeheralTypeDef APB2Peripheral);
 
 #endif // MCAL_RCC_RCC_H_

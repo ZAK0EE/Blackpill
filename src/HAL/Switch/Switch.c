@@ -75,7 +75,7 @@ static Task_State SwitchesStates[_NUM_OF_SWITCHES];
 Switch_Error_t Switch_init(void)
 {
 	Switch_Config_t  *CurrentSwitch;
-    GPIO_PinConfigTypeDef CurrentPin;
+    GPIO_PinConfig_t CurrentPin;
 
     /* Initializing all Switches pins' direction */
     uint32_t SwitchCounter = 0;
@@ -88,8 +88,8 @@ Switch_Error_t Switch_init(void)
         assert_param(IS_SWITCH_INTERNAL_PULLUP_CONFIG(CurrentSwitch->PUConfig));
 
         /* Set the switch pin configuration */ 
-        CurrentPin.Port		    = (GPIO_PortTypeDef)CurrentSwitch->PortID;
-        CurrentPin.PinNumber	= (GPIO_PinTypeDef)CurrentSwitch->PinNum;
+        CurrentPin.Port		    = (GPIO_Port_t)CurrentSwitch->PortID;
+        CurrentPin.PinNumber	= (GPIO_Pin_t)CurrentSwitch->PinNum;
         CurrentPin.PinSpeed     = GPIO_SPEED_MEDIUM;
         CurrentPin.PinMode	    = (CurrentSwitch->PUConfig == SWITCH_ENABLE_INTERNALPU) ?
                                     GPIO_MODE_INPUT_PULLUP : GPIO_MODE_INPUT_NOPULL; 
@@ -108,11 +108,11 @@ Switch_StateType_t Switch_getSwitchState(uint32_t SwitchID)
 {
     assert_param(IS_SWITCH_ID(SwitchID));
     
-	GPIO_PortTypeDef	PortID		= (GPIO_PortTypeDef)Switch_Configs[SwitchID].PortID;
-	GPIO_PinTypeDef		PinNum		= (GPIO_PinTypeDef)Switch_Configs[SwitchID].PinNum;
+	GPIO_Port_t	PortID		= (GPIO_Port_t)Switch_Configs[SwitchID].PortID;
+	GPIO_Pin_t		PinNum		= (GPIO_Pin_t)Switch_Configs[SwitchID].PinNum;
 	Switch_ActiveType_t	ActiveType	= Switch_Configs[SwitchID].ActiveType;
 
-	GPIO_PinStateTypeDef PinRead = GPIO_getPinValue(PortID, PinNum);
+	GPIO_PinState_t PinRead = GPIO_getPinValue(PortID, PinNum);
 
     Switch_StateType_t SwitchState = (Switch_StateType_t)PinRead ^ (Switch_StateType_t)ActiveType;
 

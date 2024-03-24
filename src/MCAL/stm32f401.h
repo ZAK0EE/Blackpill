@@ -28,7 +28,7 @@ typedef enum
     MCAL_BUSY     = 0x02U,
     MCAL_TIMEOUT  = 0x03U
 }
-MCAL_StatusTypeDef;
+MCAL_Status_t;
 
 
 
