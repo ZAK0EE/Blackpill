@@ -30,6 +30,8 @@ extern void Switch_Task_CheckState(void);
 extern void TrafficLight_task(void);
 
 extern void LCD_task(void);
+extern void LCDAPP_task(void);
+
 /********************************************************************************************************/
 /************************************************Variables***********************************************/
 /********************************************************************************************************/
@@ -49,5 +51,11 @@ Sched_Runnable_Config_t Sched_Runnables[_NUM_OF_RUNNABLES] =
         .CallBack = LCD_task,
         .DelayMS = 0,
         .PeriodicityMS = 1,
+    },
+    [SCHED_LCDAPP]=
+    {
+        .CallBack = LCDAPP_task,
+        .DelayMS = 0,
+        .PeriodicityMS = 100,
     }             
 };
