@@ -106,7 +106,7 @@ void LCD_task(void);
  * @brief Retrieves the current state of the LCD.
  * @return LCD_State_t Current state of the LCD.
  */
-LCD_State_t LCD_getState(void);
+LCD_State_t LCD_getState(LCD_ID ID);
 
 /**
  * @brief Clears the screen of the specified LCD asynchronously.
@@ -118,7 +118,7 @@ void LCD_clearScreenAsync(LCD_ID ID);
  * @brief Sets the cursor position on the specified LCD asynchronously.
  * @param ID The ID of the LCD to set the cursor position.
  */
-void LCD_setCursorPositionAsync(LCD_ID ID);
+void LCD_setCursorPositionAsync(LCD_ID ID, uint8_t row, uint8_t col);
 
 /**
  * @brief Writes a string to the specified LCD asynchronously.

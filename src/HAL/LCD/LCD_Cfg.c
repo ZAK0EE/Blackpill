@@ -53,7 +53,7 @@ LCD_Config_t LCD_Config[_NUM_OF_LCDS]=
 		.DataLength = LCD_DL_8BIT,
 		.Font= LCD_FONT_5X10,
 		.CursorState = LCD_CURSOR_STATE_ON,
-		.CursorBlinkingState = LCD_CURSOR_BLINKING_ON,
+		.CursorBlinkingState = LCD_CURSOR_BLINKING_OFF,
  		.RSPin=
 		{
 			.PortID= GPIO_GPIOA,
@@ -102,4 +102,59 @@ LCD_Config_t LCD_Config[_NUM_OF_LCDS]=
 		}
 
 	},
+
+	[LCD2]=
+	{
+		.DataLength = LCD_DL_8BIT,
+		.Font= LCD_FONT_5X10,
+		.CursorState = LCD_CURSOR_STATE_ON,
+		.CursorBlinkingState = LCD_CURSOR_BLINKING_ON,
+ 		.RSPin=
+		{
+			.PortID= GPIO_GPIOB,
+			.PinNum= GPIO_PIN0,
+		},
+		.EnablePin = 
+		{
+			.PortID= GPIO_GPIOB,
+			.PinNum= GPIO_PIN2,	
+		},
+		.Pins =
+		{
+			{
+				.PortID= GPIO_GPIOB,
+				.PinNum= GPIO_PIN3,
+			},
+			{
+				.PortID= GPIO_GPIOB,
+				.PinNum= GPIO_PIN4,	
+			},
+			{
+				.PortID= GPIO_GPIOB,
+				.PinNum= GPIO_PIN5,
+			},
+			{
+				.PortID= GPIO_GPIOB,
+				.PinNum= GPIO_PIN6,
+			},
+			{
+				.PortID= GPIO_GPIOB,
+				.PinNum= GPIO_PIN7,
+			},
+			{
+				.PortID= GPIO_GPIOB,
+				.PinNum= GPIO_PIN8,
+			},
+			{
+				.PortID= GPIO_GPIOB,
+				.PinNum= GPIO_PIN9,
+			},
+			{
+				.PortID= GPIO_GPIOB,
+				.PinNum= GPIO_PIN10,
+			},
+																			
+		}
+
+	},	
 };
