@@ -41,7 +41,8 @@ typedef enum
 {
     LCD_OPERATION_NONE,
     LCD_OPERATION_WRITE_STRING,
-    LCD_OPERATION_SETCURSOR_POS,    
+    LCD_OPERATION_SETCURSOR_POS, 
+    LCD_OPERATION_CLEAR_SCREEN,   
 }
 OperationState_t;
 
@@ -405,6 +406,19 @@ static void Operate(void)
                 }
                 break;
             }
+            case LCD_OPERATION_CLEAR_SCREEN:
+            {
+                uint8_t cmd = 0;
+                cmd = 0x01;
+
+                WriteLCD(LCD_ID, cmd, LCD_SEND_CMD);
+
+                if(CurrentWriteCommandState[LCD_ID] == LCD_WRITELCD_READY)
+                {
+                    CurrentOperation[LCD_ID] = LCD_OPERATION_NONE;
+                }
+                break;
+            }
             case LCD_OPERATION_NONE:break;
         }        
     }
@@ -415,7 +429,14 @@ LCD_State_t LCD_getState(LCD_ID ID)
     return ((CurrentPhase == LCD_PHS_OPERATION) && (CurrentOperation[ID] == LCD_OPERATION_NONE)) ? LCD_STATE_READY : LCD_STATE_BUSY;
 }
 
-void LCD_clearScreenAsync(LCD_ID ID){}
+void LCD_clearScreenAsync(LCD_ID ID)
+{
+    assert_param(ID < _NUM_OF_LCDS);
+    if(CurrentOperation[ID] == LCD_OPERATION_NONE)
+    {
+        CurrentOperation[ID] = LCD_OPERATION_SETCURSOR_POS;
+    }  
+}
 void LCD_setCursorPositionAsync(LCD_ID ID, uint8_t row, uint8_t col)
 {
     assert_param(ID < _NUM_OF_LCDS);

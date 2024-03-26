@@ -34,10 +34,10 @@ void ToggleYellowLed1MS(void)
    
 }
 #include "MCAL/GPIO/GPIO.h"
-
 int main()
 {
     RCC_enableAHB1Peripheral(RCC_AHB1PERIPHERAL_GPIOA);
+    RCC_enableAHB1Peripheral(RCC_AHB1PERIPHERAL_GPIOB);
 
     GPIO_initPin(&(GPIO_PinConfig_t){
         .Port = GPIO_GPIOA,
@@ -45,10 +45,18 @@ int main()
         .PinMode = GPIO_MODE_OUTPUT_PUSHPULL_NOPULL,
         .PinSpeed = GPIO_SPEED_MEDIUM
         });
-    GPIO_setPinValue(GPIO_GPIOA, GPIO_PIN1, GPIO_PINSTATE_RESET);
 
-   // LED_Init();
-   // Switch_init();
+    GPIO_initPin(&(GPIO_PinConfig_t){
+        .Port = GPIO_GPIOB,
+        .PinNumber = GPIO_PIN1,
+        .PinMode = GPIO_MODE_OUTPUT_PUSHPULL_NOPULL,
+        .PinSpeed = GPIO_SPEED_MEDIUM
+        });        
+    GPIO_setPinValue(GPIO_GPIOA, GPIO_PIN1, GPIO_PINSTATE_RESET);
+    GPIO_setPinValue(GPIO_GPIOB, GPIO_PIN1, GPIO_PINSTATE_RESET);
+
+
+
 
     Sched_init();
     Sched_start();
