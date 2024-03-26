@@ -5,7 +5,7 @@
 /************************************************Includes************************************************/
 /********************************************************************************************************/
 #include <stdint.h>
-
+#include "LCD_Cfg.h"
 /********************************************************************************************************/
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
@@ -57,9 +57,8 @@ typedef enum
  */
 typedef enum
 {
-    LED_STATE_INIT,   /**< LCD initialization state */
-    LED_STATE_BUSY,   /**< LCD busy state */
-    LED_STATE_READY   /**< LCD ready state */
+    LCD_STATE_BUSY,   /**< LCD busy state */
+    LCD_STATE_READY   /**< LCD ready state */
 } LCD_State_t;
 
 
@@ -86,11 +85,11 @@ typedef struct
     LCD_Pin_t RSPin;						        /**< Pin configuration for RS (Register Select) */
 
     LCD_Pin_t Pins[8];						        /**< Pins configuration */
-} LCD_structConfig_t;
+} LCD_Config_t;
 
 
 
-
+extern LCD_Config_t LCD_Config[_NUM_OF_LCDS];
 /********************************************************************************************************/
 /************************************************APIs****************************************************/
 /********************************************************************************************************/
@@ -98,14 +97,10 @@ typedef struct
 /**
  * @brief Performs LCD-related tasks. 
  * @note This function needs to be called periodically (Add it to the scheduler)
- * with minimum 1ms periodicity
  */
 void LCD_task(void);
 
-/**
- * @brief Initializes the LCD.
- */
-void LCD_init(void);
+
 
 /**
  * @brief Retrieves the current state of the LCD.

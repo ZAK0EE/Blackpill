@@ -14,7 +14,7 @@
 /********************************************************************************************************/
 #include "LCD.h"
 #include "LCD_Cfg.h"
-
+#include "MCAL/GPIO/GPIO.h"
 /********************************************************************************************************/
 /************************************************Defines*************************************************/
 /********************************************************************************************************/
@@ -46,57 +46,57 @@
 
 
 
-LCD_structConfig_t LCD_pstructConfig[_NUM_OF_LCDS]=
+LCD_Config_t LCD_Config[_NUM_OF_LCDS]=
 {
 	[LCD1]=
 	{
 		.DataLength = LCD_DL_8BIT,
-		.Font= LCD_FONT_5X7,
-		.CursorState = LCD_CURSOR_STATE_OFF,
-		.CursorBlinkingState = LCD_CURSOR_BLINKING_OFF,
+		.Font= LCD_FONT_5X10,
+		.CursorState = LCD_CURSOR_STATE_ON,
+		.CursorBlinkingState = LCD_CURSOR_BLINKING_ON,
  		.RSPin=
 		{
-			.PortID= 1,
-			.PinNum= 0,
+			.PortID= GPIO_GPIOA,
+			.PinNum= GPIO_PIN0,
 		},
 		.EnablePin = 
 		{
-			.PortID= 1,
-			.PinNum= 1,	
+			.PortID= GPIO_GPIOA,
+			.PinNum= GPIO_PIN2,	
 		},
 		.Pins =
 		{
 			{
-				.PortID= 0,
-				.PinNum= 0,
+				.PortID= GPIO_GPIOA,
+				.PinNum= GPIO_PIN3,
 			},
 			{
-				.PortID= 0,
-				.PinNum= 1,	
+				.PortID= GPIO_GPIOA,
+				.PinNum= GPIO_PIN4,	
 			},
 			{
-				.PortID= 0,
-				.PinNum= 2,
+				.PortID= GPIO_GPIOA,
+				.PinNum= GPIO_PIN5,
 			},
 			{
-				.PortID= 0,
-				.PinNum= 3,
+				.PortID= GPIO_GPIOA,
+				.PinNum= GPIO_PIN6,
 			},
 			{
-				.PortID= 0,
-				.PinNum= 4,
+				.PortID= GPIO_GPIOA,
+				.PinNum= GPIO_PIN7,
 			},
 			{
-				.PortID= 0,
-				.PinNum= 5,
+				.PortID= GPIO_GPIOA,
+				.PinNum= GPIO_PIN8,
 			},
 			{
-				.PortID= 0,
-				.PinNum= 6,
+				.PortID= GPIO_GPIOA,
+				.PinNum= GPIO_PIN9,
 			},
 			{
-				.PortID= 0,
-				.PinNum= 7,
+				.PortID= GPIO_GPIOA,
+				.PinNum= GPIO_PIN10,
 			},
 																			
 		}
