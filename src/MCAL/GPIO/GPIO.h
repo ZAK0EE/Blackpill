@@ -172,7 +172,7 @@ typedef struct
  * @param[in] PinConfig Configuration structure for the GPIO pin.
  * @return Status indicating the success or failure of the initialization @ref MCAL_Status_t.
  */
-MCAL_Status_t GPIO_initPin(GPIO_PinConfig_t *PinConfig);
+MCAL_Status_t GPIO_initPin(GPIO_PinConfig_t const *PinConfig);
 
 /**
  * @brief Sets the value of a GPIO pin.

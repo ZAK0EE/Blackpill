@@ -122,7 +122,7 @@ GPIO_TypeDef volatile *const GPIOS[NUM_OF_GPIOS] = {
 /*********************************************APIs Implementation****************************************/
 /********************************************************************************************************/
 
-MCAL_Status_t GPIO_initPin(GPIO_PinConfig_t *PinConfig)
+MCAL_Status_t GPIO_initPin(GPIO_PinConfig_t const *PinConfig)
 {
     GPIO_TypeDef volatile *const GPIO = GPIOS[PinConfig->Port];
 
