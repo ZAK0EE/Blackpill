@@ -28,6 +28,8 @@ extern void ToggleYellowLed1MS(void);
 extern void SwitchToggle_task(void);
 extern void Switch_Task_CheckState(void);
 extern void TrafficLight_task(void);
+
+extern void LCD_task(void);
 /********************************************************************************************************/
 /************************************************Variables***********************************************/
 /********************************************************************************************************/
@@ -36,10 +38,16 @@ Sched_Runnable_Config_t Sched_Runnables[_NUM_OF_RUNNABLES] =
 {
 
 
-    [SCHED_TRAFFICLIGHT]=
+    // [SCHED_TRAFFICLIGHT]=
+    // {
+    //     .CallBack = TrafficLight_task,
+    //     .DelayMS = 0,
+    //     .PeriodicityMS = 1000,
+    // },    
+    [SCHED_LCD]=
     {
-        .CallBack = TrafficLight_task,
+        .CallBack = LCD_task,
         .DelayMS = 0,
-        .PeriodicityMS = 1000,
-    },                 
+        .PeriodicityMS = 1,
+    }             
 };

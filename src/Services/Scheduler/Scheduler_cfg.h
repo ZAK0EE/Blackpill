@@ -36,7 +36,8 @@
 typedef enum
 {
   
-    SCHED_TRAFFICLIGHT,     
+   // SCHED_TRAFFICLIGHT,    
+    SCHED_LCD, 
          
     _NUM_OF_RUNNABLES,    /**< Total number of runnables. Do not modify. */
 } Sched_Runnable_Name_t;
