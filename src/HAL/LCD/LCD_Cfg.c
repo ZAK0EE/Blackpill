@@ -50,7 +50,7 @@ LCD_Config_t LCD_Config[_NUM_OF_LCDS]=
 {
 	[LCD1]=
 	{
-		.DataLength = LCD_DL_8BIT,
+		.DataLength = LCD_DL_4BIT,
 		.Font= LCD_FONT_5X10,
 		.CursorState = LCD_CURSOR_STATE_ON,
 		.CursorBlinkingState = LCD_CURSOR_BLINKING_OFF,
@@ -68,19 +68,19 @@ LCD_Config_t LCD_Config[_NUM_OF_LCDS]=
 		{
 			{
 				.PortID= GPIO_GPIOA,
-				.PinNum= GPIO_PIN3,
+				.PinNum= GPIO_PIN7,
 			},
 			{
 				.PortID= GPIO_GPIOA,
-				.PinNum= GPIO_PIN4,	
+				.PinNum= GPIO_PIN8,	
 			},
 			{
 				.PortID= GPIO_GPIOA,
-				.PinNum= GPIO_PIN5,
+				.PinNum= GPIO_PIN9,
 			},
 			{
 				.PortID= GPIO_GPIOA,
-				.PinNum= GPIO_PIN6,
+				.PinNum= GPIO_PIN10,
 			},
 			{
 				.PortID= GPIO_GPIOA,

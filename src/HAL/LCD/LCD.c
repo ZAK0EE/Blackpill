@@ -154,7 +154,7 @@ static void WriteLCD(LCD_ID LCD_ID, uint8_t Command, SendType_t SendType)
     {        
         case LCD_WRITELCD_READY:
         {
-            /* R/W is low for command, high for data*/
+            /* RS is low for command, high for data*/
             GPIO_setPinValue(RSPortID, RSPinNum, RSPinState);
             
             if(CurrentLCD->DataLength == LCD_DL_8BIT)
@@ -176,14 +176,15 @@ static void WriteLCD(LCD_ID LCD_ID, uint8_t Command, SendType_t SendType)
         }
         case LCD_WRITELCD_TRIGGER:
         {
+            /* Send is done*/
+            GPIO_setPinValue(ENPortID, ENPinNum, GPIO_PINSTATE_RESET);
+
             if(CurrentLCD->DataLength == LCD_DL_4BIT)
             {
                 CurrentWriteCommandState[LCD_ID] = LCD_WRITELCD_WRITEPINS_4BIT;
             }
             else
             {
-                /* Send is done*/
-                GPIO_setPinValue(ENPortID, ENPinNum, GPIO_PINSTATE_RESET);
                 CurrentWriteCommandState[LCD_ID] = LCD_WRITELCD_READY;
             }
             break;
@@ -192,6 +193,7 @@ static void WriteLCD(LCD_ID LCD_ID, uint8_t Command, SendType_t SendType)
         {
             WritePins(LCD_ID, Command);
             GPIO_setPinValue(ENPortID, ENPinNum, GPIO_PINSTATE_SET);
+            CurrentWriteCommandState[LCD_ID] = LCD_WRITELCD_TRIGGER_4BIT;
 
             break;
         }

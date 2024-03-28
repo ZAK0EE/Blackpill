@@ -34,6 +34,7 @@ void ToggleYellowLed1MS(void)
    
 }
 #include "MCAL/GPIO/GPIO.h"
+#include "HAL/LCD/LCD.h"
 int main()
 {
     RCC_enableAHB1Peripheral(RCC_AHB1PERIPHERAL_GPIOA);
@@ -56,6 +57,7 @@ int main()
     GPIO_setPinValue(GPIO_GPIOB, GPIO_PIN1, GPIO_PINSTATE_RESET);
 
 
+    //LCD_writeStringAsync(LCD1, "Anas", 4);
 
 
     Sched_init();

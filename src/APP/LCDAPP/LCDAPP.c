@@ -58,7 +58,7 @@ void LCDAPP_task(void)
         }
         case 2:
         {
-            LCD_writeStringAsync(LCD1, "Test", 4);
+            LCD_writeStringAsync(LCD1, "Anas", 4);
             LCD_writeStringAsync(LCD2, "Noway", 5);
             states++;
             MyTime = 0;
