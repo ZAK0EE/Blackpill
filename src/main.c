@@ -40,25 +40,10 @@ int main()
     RCC_enableAHB1Peripheral(RCC_AHB1PERIPHERAL_GPIOA);
     RCC_enableAHB1Peripheral(RCC_AHB1PERIPHERAL_GPIOB);
 
-    GPIO_initPin(&(GPIO_PinConfig_t){
-        .Port = GPIO_GPIOA,
-        .PinNumber = GPIO_PIN1,
-        .PinMode = GPIO_MODE_OUTPUT_PUSHPULL_NOPULL,
-        .PinSpeed = GPIO_SPEED_MEDIUM
-        });
-
-    GPIO_initPin(&(GPIO_PinConfig_t){
-        .Port = GPIO_GPIOB,
-        .PinNumber = GPIO_PIN1,
-        .PinMode = GPIO_MODE_OUTPUT_PUSHPULL_NOPULL,
-        .PinSpeed = GPIO_SPEED_MEDIUM
-        });        
-    GPIO_setPinValue(GPIO_GPIOA, GPIO_PIN1, GPIO_PINSTATE_RESET);
-    GPIO_setPinValue(GPIO_GPIOB, GPIO_PIN1, GPIO_PINSTATE_RESET);
 
 
     //LCD_writeStringAsync(LCD1, "Anas", 4);
-
+    LCD_init(0);
 
     Sched_init();
     Sched_start();

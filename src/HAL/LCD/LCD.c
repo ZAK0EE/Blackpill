@@ -32,6 +32,7 @@ typedef enum
 }SendType_t;
 typedef enum
 {
+    LCD_PHS_OFF,
     LCD_PHS_INIT,
     LCD_PHS_OPERATION,
 }
@@ -92,11 +93,11 @@ typedef struct
 /********************************************************************************************************/
 /************************************************Variables***********************************************/
 /********************************************************************************************************/
-static PhaseState_t CurrentPhase = LCD_PHS_INIT;
+static PhaseState_t CurrentPhase[_NUM_OF_LCDS] = {LCD_PHS_OFF};
 static OperationState_t CurrentOperation[_NUM_OF_LCDS] = {LCD_OPERATION_NONE};
-static InitStep_t CurrentInitStep = LCD_INIT_PINS;
+static InitStep_t CurrentInitStep[_NUM_OF_LCDS] = {LCD_INIT_PINS};
 static WriteLCDState_t CurrentWriteCommandState[_NUM_OF_LCDS] = {LCD_WRITELCD_READY};
-static uint32_t elapsedTimeMS = 0;
+static uint32_t elapsedTimeMS[_NUM_OF_LCDS] = {0};
 
 static UserRequest_t UserRequest[_NUM_OF_LCDS] = {0};
 
@@ -107,11 +108,11 @@ static UserRequest_t UserRequest[_NUM_OF_LCDS] = {0};
 /**
  * @brief Initializes the LCD.
  */
-static void Init(void);
-static void Operate(void);
+static void Init(LCD_ID ID);
+static void Operate(LCD_ID ID);
 
 /* Initialization functions */
-static void PinsInit(void);
+static void PinsInit(LCD_ID ID);
 
 static void WriteLCD(LCD_ID LCD_ID, uint8_t Command, SendType_t SendType);
 static void WritePins(LCD_ID LCD_ID, uint8_t value);
@@ -211,71 +212,76 @@ static void WriteLCD(LCD_ID LCD_ID, uint8_t Command, SendType_t SendType)
 }
 
 
-static void PinsInit(void)
+static void PinsInit(LCD_ID ID)
 {
-    /* Initializing all LCDs */
-    LCD_ID LCD_ID = 0;
-    for(LCD_ID = 0; LCD_ID < _NUM_OF_LCDS; LCD_ID++)        
+    LCD_Config_t const *CurrentLCD = &(LCD_Config[ID]);
+
+    /* Initializing current LCD pins' direction */
+    uint8_t LCDPinCounter = 0;
+    uint8_t NumOfPins = (CurrentLCD->DataLength == LCD_DL_8BIT) ? 8 : 4;
+    GPIO_PinConfig_t PinConfig;
+    for(LCDPinCounter = 0; LCDPinCounter < NumOfPins; LCDPinCounter++)
     {
-        LCD_Config_t const *CurrentLCD = &(LCD_Config[LCD_ID]);
-
-        /* Initializing current LCD pins' direction */
-        uint8_t LCDPinCounter = 0;
-        uint8_t NumOfPins = (CurrentLCD->DataLength == LCD_DL_8BIT) ? 8 : 4;
-        GPIO_PinConfig_t PinConfig;
-        for(LCDPinCounter = 0; LCDPinCounter < NumOfPins; LCDPinCounter++)
-        {
-            PinConfig.Port	        = (GPIO_Port_t)CurrentLCD->Pins[LCDPinCounter].PortID;
-            PinConfig.PinNumber		= (GPIO_Pin_t)CurrentLCD->Pins[LCDPinCounter].PinNum;
-            PinConfig.PinSpeed      = GPIO_SPEED_MEDIUM;
-            PinConfig.PinMode       = GPIO_MODE_OUTPUT_PUSHPULL_NOPULL;
-            GPIO_initPin(&PinConfig);
-        }
-
-        /* Initializing current RS pin direction */
-        PinConfig.Port		    = (GPIO_Port_t)CurrentLCD->RSPin.PortID;
-        PinConfig.PinNumber		= (GPIO_Pin_t)CurrentLCD->RSPin.PinNum;
-        GPIO_initPin(&PinConfig);
-
-
-        /* Initializing current Enable pin direction */
-        PinConfig.Port		    = (GPIO_Port_t)CurrentLCD->EnablePin.PortID;
-        PinConfig.PinNumber		= (GPIO_Pin_t)CurrentLCD->EnablePin.PinNum;
+        PinConfig.Port	        = (GPIO_Port_t)CurrentLCD->Pins[LCDPinCounter].PortID;
+        PinConfig.PinNumber		= (GPIO_Pin_t)CurrentLCD->Pins[LCDPinCounter].PinNum;
+        PinConfig.PinSpeed      = GPIO_SPEED_MEDIUM;
+        PinConfig.PinMode       = GPIO_MODE_OUTPUT_PUSHPULL_NOPULL;
         GPIO_initPin(&PinConfig);
     }
+
+    /* Initializing current RS pin direction */
+    PinConfig.Port		    = (GPIO_Port_t)CurrentLCD->RSPin.PortID;
+    PinConfig.PinNumber		= (GPIO_Pin_t)CurrentLCD->RSPin.PinNum;
+    GPIO_initPin(&PinConfig);
+
+
+    /* Initializing current Enable pin direction */
+    PinConfig.Port		    = (GPIO_Port_t)CurrentLCD->EnablePin.PortID;
+    PinConfig.PinNumber		= (GPIO_Pin_t)CurrentLCD->EnablePin.PinNum;
+    GPIO_initPin(&PinConfig);
+
 }
 
 void LCD_task(void)
 {
-    switch(CurrentPhase)
+    LCD_ID LCD_ID = 0;
+    for(LCD_ID = 0; LCD_ID < _NUM_OF_LCDS; LCD_ID++)  
     {
-        case LCD_PHS_INIT:
-            Init();
-            break;
-        
-        case LCD_PHS_OPERATION:
-            Operate();
-            break;
-    }
-    elapsedTimeMS++;
+        switch(CurrentPhase[LCD_ID])
+        {
+            case LCD_PHS_OFF:
+                break;
+            case LCD_PHS_INIT:
+                Init(LCD_ID);
+                break;
+            
+            case LCD_PHS_OPERATION:
+                Operate(LCD_ID);
+                break;
+        }
+        elapsedTimeMS[LCD_ID]++;
+
+    }   
+
 }
-void Init(void)
+
+void Init(LCD_ID ID)
 {
 
-    switch(CurrentInitStep)
+    switch(CurrentInitStep[ID])
     {
         case LCD_INIT_PINS:
         {
 
-            PinsInit();
-            elapsedTimeMS = 0;
-            CurrentInitStep++;
+            PinsInit(ID);
+            elapsedTimeMS[ID] = 0;
+            CurrentInitStep[ID]++;
 
             break;
         }
         case LCD_INIT_FUNCTION_SET:
         {
-            if(elapsedTimeMS >= LCD_TIMEMS_WAKEUP)
+            if(elapsedTimeMS[ID] >= LCD_TIMEMS_WAKEUP)
             { 
                 
                 LCD_ID LCD_ID = 0;
@@ -293,10 +299,10 @@ void Init(void)
                     WriteLCD(LCD_ID, FunctionSetCommand, LCD_SEND_CMD);
                     
                 }
-                if(CurrentWriteCommandState[0] == LCD_WRITELCD_READY && elapsedTimeMS > 8)
+                if(CurrentWriteCommandState[0] == LCD_WRITELCD_READY && elapsedTimeMS[ID] > 8)
                 {
-                    CurrentInitStep++;
-                    elapsedTimeMS = 0;
+                    CurrentInitStep[ID]++;
+                    elapsedTimeMS[ID] = 0;
 
                 }                        
 
@@ -317,10 +323,10 @@ void Init(void)
                 cmd = (1 << 3) | (1 << 2) | (CurrentLCD->CursorState << 1) | (CurrentLCD->CursorBlinkingState >> 0);
                 WriteLCD(LCD_ID, cmd, LCD_SEND_CMD);                
             }        
-            if(CurrentWriteCommandState[0] == LCD_WRITELCD_READY && elapsedTimeMS > 8)
+            if(CurrentWriteCommandState[0] == LCD_WRITELCD_READY && elapsedTimeMS[ID] > 8)
             {
-                CurrentInitStep++;
-                elapsedTimeMS = 0;
+                CurrentInitStep[ID]++;
+                elapsedTimeMS[ID] = 0;
 
             }
 
@@ -337,10 +343,10 @@ void Init(void)
                 WriteLCD(LCD_ID, cmd, LCD_SEND_CMD);                
             }        
             
-            if(CurrentWriteCommandState[0] == LCD_WRITELCD_READY && elapsedTimeMS > 8)
+            if(CurrentWriteCommandState[0] == LCD_WRITELCD_READY && elapsedTimeMS[ID] > 8)
             {
-                CurrentInitStep++;
-                elapsedTimeMS = 0;
+                CurrentInitStep[ID]++;
+                elapsedTimeMS[ID] = 0;
 
             }           
             break;
@@ -356,10 +362,10 @@ void Init(void)
                 WriteLCD(LCD_ID, cmd, LCD_SEND_CMD);                
             }        
             
-            if(CurrentWriteCommandState[0] == LCD_WRITELCD_READY && elapsedTimeMS > 5)
+            if(CurrentWriteCommandState[0] == LCD_WRITELCD_READY && elapsedTimeMS[ID] > 5)
             {
-                CurrentPhase = LCD_PHS_OPERATION;
-                elapsedTimeMS = 0;
+                CurrentPhase[ID] = LCD_PHS_OPERATION;
+                elapsedTimeMS[ID] = 0;
 
             }           
             break;
@@ -369,66 +375,68 @@ void Init(void)
  
 }
 
-static void Operate(void)
+static void Operate(LCD_ID ID)
 {
-    LCD_ID LCD_ID = 0;
-    for(LCD_ID = 0; LCD_ID < _NUM_OF_LCDS; LCD_ID++)
+
+    switch(CurrentOperation[ID])
     {
-        switch(CurrentOperation[LCD_ID])
+        case LCD_OPERATION_WRITE_STRING:
         {
-            case LCD_OPERATION_WRITE_STRING:
+            uint32_t index = UserRequest[ID].StringRequest.index;
+            uint8_t *buffer = UserRequest[ID].StringRequest.Buffer;
+
+            WriteLCD(ID, buffer[index], LCD_SEND_DATA);
+
+            if(CurrentWriteCommandState[ID] == LCD_WRITELCD_READY)
             {
-                uint32_t index = UserRequest[LCD_ID].StringRequest.index;
-                uint8_t *buffer = UserRequest[LCD_ID].StringRequest.Buffer;
-
-                WriteLCD(LCD_ID, buffer[index], LCD_SEND_DATA);
-
-                if(CurrentWriteCommandState[LCD_ID] == LCD_WRITELCD_READY)
-                {
-                    UserRequest[LCD_ID].StringRequest.index++;
-                }
-
-                if((CurrentWriteCommandState[LCD_ID] == LCD_WRITELCD_READY) && UserRequest[LCD_ID].StringRequest.index == UserRequest[LCD_ID].StringRequest.len)
-                {
-                    CurrentOperation[LCD_ID] = LCD_OPERATION_NONE;
-                }
-                break;
+                UserRequest[ID].StringRequest.index++;
             }
-            case LCD_OPERATION_SETCURSOR_POS:
+
+            if((CurrentWriteCommandState[ID] == LCD_WRITELCD_READY) && UserRequest[ID].StringRequest.index == UserRequest[ID].StringRequest.len)
             {
-                uint8_t cmd = 0;
-                cmd |= (1 << 7);
-
-                cmd |= (UserRequest[LCD_ID].CursorPos.row * 0x40) + UserRequest[LCD_ID].CursorPos.col;
-                WriteLCD(LCD_ID, cmd, LCD_SEND_CMD);
-
-                if(CurrentWriteCommandState[LCD_ID] == LCD_WRITELCD_READY)
-                {
-                    CurrentOperation[LCD_ID] = LCD_OPERATION_NONE;
-                }
-                break;
+                CurrentOperation[ID] = LCD_OPERATION_NONE;
             }
-            case LCD_OPERATION_CLEAR_SCREEN:
+            break;
+        }
+        case LCD_OPERATION_SETCURSOR_POS:
+        {
+            uint8_t cmd = 0;
+            cmd |= (1 << 7);
+
+            cmd |= (UserRequest[ID].CursorPos.row * 0x40) + UserRequest[ID].CursorPos.col;
+            WriteLCD(ID, cmd, LCD_SEND_CMD);
+
+            if(CurrentWriteCommandState[ID] == LCD_WRITELCD_READY)
             {
-                uint8_t cmd = 0;
-                cmd = 0x01;
-
-                WriteLCD(LCD_ID, cmd, LCD_SEND_CMD);
-
-                if(CurrentWriteCommandState[LCD_ID] == LCD_WRITELCD_READY)
-                {
-                    CurrentOperation[LCD_ID] = LCD_OPERATION_NONE;
-                }
-                break;
+                CurrentOperation[ID] = LCD_OPERATION_NONE;
             }
-            case LCD_OPERATION_NONE:break;
-        }        
-    }
+            break;
+        }
+        case LCD_OPERATION_CLEAR_SCREEN:
+        {
+            uint8_t cmd = 0;
+            cmd = 0x01;
 
+            WriteLCD(ID, cmd, LCD_SEND_CMD);
+
+            if(CurrentWriteCommandState[ID] == LCD_WRITELCD_READY)
+            {
+                CurrentOperation[ID] = LCD_OPERATION_NONE;
+            }
+            break;
+        }
+        case LCD_OPERATION_NONE:break;
+    }        
+
+}
+
+void LCD_init(LCD_ID ID)
+{
+    CurrentPhase[ID] = LCD_PHS_INIT;
 }
 LCD_State_t LCD_getState(LCD_ID ID)
 {
-    return ((CurrentPhase == LCD_PHS_OPERATION) && (CurrentOperation[ID] == LCD_OPERATION_NONE)) ? LCD_STATE_READY : LCD_STATE_BUSY;
+    return ((CurrentPhase[ID] == LCD_PHS_OPERATION) && (CurrentOperation[ID] == LCD_OPERATION_NONE)) ? LCD_STATE_READY : LCD_STATE_BUSY;
 }
 
 void LCD_clearScreenAsync(LCD_ID ID)

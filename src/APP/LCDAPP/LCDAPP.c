@@ -40,7 +40,6 @@ void LCDAPP_task(void)
         case 0:
         {
             LCD_setCursorPositionAsync(LCD1, 0, 5);
-            LCD_setCursorPositionAsync(LCD2, 1, 0);
             MyTime = 0;            
             states++;
 
@@ -48,7 +47,7 @@ void LCDAPP_task(void)
         }
         case 1:
         {
-            if((LCD_getState(LCD1) == LCD_STATE_READY) && (LCD_getState(LCD2) == LCD_STATE_READY))
+            if((LCD_getState(LCD1) == LCD_STATE_READY))
             {
                 MyTime = 0;
                 states++;
@@ -58,8 +57,7 @@ void LCDAPP_task(void)
         }
         case 2:
         {
-            LCD_writeStringAsync(LCD1, "Anas", 4);
-            LCD_writeStringAsync(LCD2, "Noway", 5);
+            LCD_writeStringAsync(LCD1, "Ziad", 4);
             states++;
             MyTime = 0;
             break;
@@ -67,7 +65,7 @@ void LCDAPP_task(void)
         case 3:
         {
 
-            if((LCD_getState(LCD1) == LCD_STATE_READY) && (LCD_getState(LCD2) == LCD_STATE_READY) && (MyTime >= 50))
+            if((LCD_getState(LCD1) == LCD_STATE_READY) && (MyTime >= 50))
             {
                 states = 0;
                 MyTime = 0;

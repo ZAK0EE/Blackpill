@@ -101,6 +101,12 @@ extern LCD_Config_t LCD_Config[_NUM_OF_LCDS];
 void LCD_task(void);
 
 
+/**
+ * @brief Initializes the LCD identified by the given ID.
+ * 
+ * @param ID The ID of the LCD to initialize.
+ */
+void LCD_init(LCD_ID ID);
 
 /**
  * @brief Retrieves the current state of the LCD.

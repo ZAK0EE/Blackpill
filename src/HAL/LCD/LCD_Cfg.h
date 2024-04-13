@@ -37,7 +37,6 @@
 typedef enum
 {
     LCD1,            /**< Identifier for the first LCD */
-    LCD2,
     _NUM_OF_LCDS,     /**< Total number of LCDs ^^DO NOT MODIFY^^ */
 } LCD_ID;
 

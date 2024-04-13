@@ -55,7 +55,7 @@ Sched_Runnable_Config_t Sched_Runnables[_NUM_OF_RUNNABLES] =
     [SCHED_LCDAPP]=
     {
         .CallBack = LCDAPP_task,
-        .DelayMS = 0,
+        .DelayMS = 100,
         .PeriodicityMS = 100,
     }             
 };
